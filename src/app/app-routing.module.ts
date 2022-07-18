@@ -17,6 +17,8 @@ import { RoundComponent } from './component/round/round.component';
 import { IntoExamComponent } from './pages/into-exam/into-exam.component';
 import { RoundContestDetailComponent } from './pages/round-contest-detail/round-contest-detail.component';
 import { RecruitmentComponent } from './pages/recruitment/recruitment.component';
+import { TestCapacityComponent } from './pages/test-capacity/test-capacity.component';
+import { Page404Component } from './pages/page404/page404.component';
 const routes: Routes = [
   {
     path: "",
@@ -71,14 +73,20 @@ const routes: Routes = [
       {
         path: "tuyen-dung",
         component: RecruitmentComponent,
-      }
-     
+      },
+      {
+        path: "test-nang-luc",
+        component: TestCapacityComponent,
+      },
     ]
   },
   {
     path: "login",
     component: LoginComponent
   },
+  
+  { path: 'page-not-found', component: Page404Component },
+  { path: '**', redirectTo: '/page-not-found' }
 
 ];
 

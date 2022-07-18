@@ -1,0 +1,108 @@
+.banner {
+    @apply tw-w-full tw-h-[400px] tw-object-cover tw-rounded-xl
+}
+
+.router--home {
+    @apply tw-text-blue-700
+}
+
+.router--index {
+    @apply tw-text-gray-400
+}
+
+.test-capacity__item {
+    @apply tw-bg-white tw-p-3 tw-rounded-xl
+}
+
+.test-capacity__title {
+    @apply tw-mb-0;
+    font: 400 18px/0px Roboto, "Helvetica Neue", sans-serif !important;
+}
+
+.test-capacity__item:hover .btn-save {
+    @apply tw-bg-opacity-100 tw-duration-500 tw-bg-white
+}
+
+.test-capacity__tag {
+    @apply tw-p-1.5 tw-bg-gray-200 tw-rounded tw-space-x-2
+}
+
+.test-capacity__tag i:hover {
+    @apply tw-text-orange-500
+}
+
+.btn-save {
+    @apply tw-absolute tw-top-2 tw-right-2 tw-bg-gray-200 tw-p-1 tw-px-2 tw-rounded tw-bg-opacity-60 tw-duration-500
+}
+
+.btn-save:hover .icon-save {
+    @apply tw-text-orange-500
+}
+
+.icon-save {
+    @apply tw-text-lg tw-text-gray-500
+}
+
+.test-capacity__del-tag {
+    @apply tw-text-gray-400
+}
+
+.test-capacity__action {
+    @apply tw-underline
+}
+
+.action--del {
+    @apply tw-text-orange-400
+}
+
+.action--hidden {
+    @apply tw-text-blue-800
+}
+
+.test-capacity__time {
+    @apply tw-block tw-text-gray-400 tw-mt-1
+}
+
+
+
+
+
+
+
+
+.sidebar__countdown,
+.capacity__related-countdown {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin: 16px 0 6px;
+}
+
+.sidebar__countdown-item,
+.capacity__related-countdown-item {
+    padding: 0px 4px;
+    color: rgba(20, 20, 20, 0.333);
+}
+
+.sidebar__countdown-item-box,
+.capacity__related-countdown-item-box {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 0 12px;
+    min-width: 50px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.capacity__related-countdown-item-box {
+    background-color: transparent;
+    color: var(--primary-color);
+    min-width: 30px;
+    font-size: 18px;
+}
+
+.capacity__related-countdown {
+    margin-top: 0;
+}

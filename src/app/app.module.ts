@@ -72,6 +72,8 @@ registerLocaleData(en);
 
 import { CapacityExamComponent } from './pages/capacity-exam/capacity-exam.component';
 import { DialogConfirmComponent } from './modal/dialog-confirm/dialog-confirm.component';
+import { TestCapacityComponent } from './pages/test-capacity/test-capacity.component';
+import { Page404Component } from './pages/page404/page404.component';
 
 
 @NgModule({
@@ -113,6 +115,8 @@ import { DialogConfirmComponent } from './modal/dialog-confirm/dialog-confirm.co
     RecruitmentListCompanyComponent,
     CapacityExamComponent,
     DialogConfirmComponent,
+    TestCapacityComponent,
+    Page404Component,
   ],
   imports: [
     BrowserModule,

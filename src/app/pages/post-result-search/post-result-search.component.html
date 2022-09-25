@@ -1,14 +1,39 @@
 <div class="page-post-box py-3">
     <div class="container">
+        <div class="Filter-post">
+            <form class="recruitment-filter-box py-3 rounded row" [formGroup]="formFilter" (submit)="filterRecruitments()">
+                <div class="col-4">
+                    <input type="text" class="form-control" (keyup)="setValueKeyword($event)" placeholder="Tìm kiếm ..."
+                        id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="col-3">
+                    <div ngbDropdown class="d-inline-block w-100">
+                        <input type="text" 
+                            formControlName="filterPost" class="form-control w-100" placeholder="Bài Viết Thuộc Danh Mục"
+                            id="dropdownBasic1" ngbDropdownToggle>
+                        <div ngbDropdownMenu class="w-100" aria-labelledby="dropdownBasic1">
+                            <a *ngFor="let item of statusPost" (click)="setValueFilterPost(item)" class="text-collapse"
+                                ngbDropdownItem>{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div ngbDropdown class="d-inline-block w-100">
+                        <input type="text" formControlName="filterStatus" class="form-control" placeholder="Trạng thái"
+                            id="dropdownBasic1" ngbDropdownToggle>
+                        <div class="w-100" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <a ngbDropdownItem *ngFor="let item of statusFilter"
+                                (click)="setValueStatus(item.name)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <button class="btn-search-recruitment w-100 h-100">Tìm kiếm</button>
+                </div>
+            </form>
+        </div>
         <div class="result-post">
             <span class="result-search__text">Kết quả tìm kiếm bài viết</span>
-            <form action="" class="form-search" [formGroup]="validateForm" (ngSubmit)="searchPost()">
-                <input type="text" class="form__input" [(ngModel)]="inputKeyword" name="keyword"
-                    formControlName="keyword" placeholder="Tìm kiếm tag, tên bài viết...">
-                <button>
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </form>
             <ngx-skeleton-loader *ngIf="!results"
                 [theme]="{ 'height.px' : 30, 'width.px' :200, 'margin' : '12px 0 8px 0' , 'border-radius': '10px' }"
                 appearance="line">

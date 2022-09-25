@@ -50,4 +50,13 @@ export class ListPostService {
   uploadCV(data: any): Observable<ResponsePayload> {
     return this.http.post<ResponsePayload>(`${environment.candidateUrl}/add`, data);
   }
+
+  filterPost(keyword:string , post: string = "post-contest" , status: number = 0 ):Observable<ResponsePayload>{
+    if(keyword == ""){
+      return this.http.get<ResponsePayload>(`${environment.postListUrl}`);
+    }
+    let postChange =  post == "post-contest" ? 'post-contest' : post;
+    let statusChange =  status == 0 ? '' : status;
+    return this.http.get<ResponsePayload>(`${environment.postListUrl}?keyword=${keyword}&post==${postChange}&postHot=${statusChange}`);
+  }
 }

@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Đăng nhập");
+    console.log("uy");
   }
 
   loginWithGoogle(): void {

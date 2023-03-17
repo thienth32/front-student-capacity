@@ -26,17 +26,17 @@ export class HomeLayoutComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // const token = (localStorage.getItem("auth_token") as string)?.split("|")[1];
-    // (window as any).Echo = new Echo({
-    //   broadcaster: "socket.io",
-    //   host: `${window.location.protocol}//${window.location.hostname}:6001`,
-    //   withCredentials: true,
-    //   auth: {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   },
-    // });
+    const token = (localStorage.getItem("auth_token") as string)?.split("|")[1];
+    (window as any).Echo = new Echo({
+      broadcaster: "socket.io",
+      host: `${window.location.protocol}//${window.location.hostname}:6001`,
+      withCredentials: true,
+      auth: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    });
 
     const isHasBackRoute = this.localStorageService.getBackRoute();
     isHasBackRoute && this.localStorageService.removeBackRoute();

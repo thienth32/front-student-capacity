@@ -6,7 +6,7 @@
     Thoát
   </a>
 
-  <header class="capacity__header" *ngIf="!flagEnd && flagStart && !flagLoadingNextQuestion">
+  <header class="capacity__header" *ngIf="!flagEnd && flagStart">
     <div class="capacity__header-top">{{ question.type === 1 ? "Nhiều đáp án đúng" : "Một đáp án đúng" }}</div>
 
     <div class="capacity__header-bottom" [innerHTML]="question.content"></div>
@@ -41,44 +41,32 @@
         </ul>
       </div>
 
-      <ng-container *ngIf="flagLoadingNextQuestion; else elseFlagLoadingNextQuestion">
-        <div class="my-history text-center">
-          <h2 style="color: white">
-            Cố gắng cho câu hỏi tiếp theo nhé 🤩
-            <img style="width: 400px" src="../../../assets/img/capacity-join.gif" alt="" />
-          </h2>
-          <br />
-        </div>
-      </ng-container>
-
-      <ng-template #elseFlagLoadingNextQuestion>
-        <!-- Question take -->
-        <div class="answers row g-4 row-cols-1 row-cols-md-2">
-          <div *ngFor="let answer of question.answers">
-            <div (click)="clickAnswer(answer.id)" class="answer {{ answer.status ? 'active' : '' }}">
-              {{ answer.content }}
-            </div>
+      <!-- Question take -->
+      <div class="answers row g-4 row-cols-1 row-cols-md-2">
+        <div *ngFor="let answer of question.answers">
+          <div (click)="clickAnswer(answer.id)" class="answer {{ answer.status ? 'active' : '' }}">
+            {{ answer.content }}
           </div>
         </div>
+      </div>
 
-        <!-- Submit -->
-        <button
-          style="float: right"
-          (click)="submitQuestion()"
-          class="mt-5 my-btn my-btn-primary my-btn-s"
-          *ngIf="exam.type == 1 && !loadingSubmit"
-        >
-          Câu tiếp theo
-        </button>
-        <button
-          style="float: right"
-          (click)="submitQuestion()"
-          class="mt-5 my-btn my-btn-disabled my-btn-s"
-          *ngIf="exam.type == 1 && loadingSubmit"
-        >
-          Đang chuyển câu
-        </button>
-      </ng-template>
+      <!-- Submit -->
+      <button
+        style="float: right"
+        (click)="submitQuestion()"
+        class="mt-5 my-btn my-btn-primary my-btn-s"
+        *ngIf="exam.type == 1 && !loadingSubmit"
+      >
+        Câu tiếp theo
+      </button>
+      <button
+        style="float: right"
+        (click)="submitQuestion()"
+        class="mt-5 my-btn my-btn-disabled my-btn-s"
+        *ngIf="exam.type == 1 && loadingSubmit"
+      >
+        Đang chuyển câu
+      </button>
     </ng-template>
   </ng-container>
   <ng-template #elseTemplate>

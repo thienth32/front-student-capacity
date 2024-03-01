@@ -207,6 +207,8 @@ export class HomeComponent implements OnInit {
   setDataRecruitmentPosition(res: ResponsePayload) {
     if (res.status) {
       this.listRecruitmentPosition = res.payload.data;
+      console.log(this.listRecruitmentPosition);
+      
       this.arrLinkPost = res.payload.links;
       this.arrLinkPost.pop();
       this.arrLinkPost.shift();

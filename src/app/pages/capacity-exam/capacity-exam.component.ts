@@ -82,7 +82,8 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private localstorageService: LocalStorageService,
     @Inject(DOCUMENT) private document: any,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     // chặn f12, f11
@@ -417,6 +418,7 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   // nộp bài
   submitExam() {
     const answersData = this.getAnswersData();
@@ -465,7 +467,8 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
           this.isLoggin = false;
 
           // remove event listener
-          window.onresize = () => {};
+          window.onresize = () => {
+          };
 
           // mặc định chặn f12, f11
           window.onkeydown = (e: any) => {
@@ -863,6 +866,37 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
     if (e.keyCode == 123) {
       this.disabledEvent(e);
     }
+
+    // Ctrl + Tab
+    if (e.ctrlKey && e.keyCode == 9) {
+      this.disabledEvent(e);
+    }
+
+    // Ctrl + Shift + Tab
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 9) {
+      this.disabledEvent(e);
+    }
+
+    // Ctrl + Up arrow
+    if (e.ctrlKey && e.keyCode == 38) {
+      this.disabledEvent(e);
+    }
+
+    // Command + ` (MacOS)
+    if (e.keyCode == 192 && e.mateKey) {
+      this.disabledEvent(e);
+    }
+
+    // Alt + Tab
+    if (e.keyCode == 9 && e.altKey) {
+      this.disabledEvent(e);
+    }
+
+    // Windows + Tab
+    if (e.keyCode == 9 && e.metaKey) {
+      this.disabledEvent(e);
+    }
+
     if (e.ctrlKey && (e.key == "p" || e.charCode == 16 || e.charCode == 112 || e.keyCode == 80)) {
       e.cancelBubble = true;
       e.preventDefault();
@@ -887,9 +921,13 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
 
   // remove all event in page
   handleRemoveAllEvent() {
-    window.onresize = () => {};
-    window.onkeydown = () => {};
-    window.oncontextmenu = () => {};
+    window.onresize = () => {
+    };
+    window.onkeydown = (e: any) => {
+      this.disabledEvent(e);
+    };
+    window.oncontextmenu = () => {
+    };
   }
 
   // get thời gian làm bài
@@ -978,7 +1016,8 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
             data: this.examHistory,
           });
         },
-        () => {},
+        () => {
+        },
         () => (this.isFetchingHistoryExam = false),
       );
     } else {

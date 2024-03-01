@@ -1,19 +1,21 @@
 <div class="recruitment-position-item my-shadow-3-hover">
   <div class="recruitment-position__img-section">
-    <a [routerLink]="['/tin-tuc/', item.slug]">
+    <a [routerLink]="['/tin-tuc/', item.slug]" (click)="increaseViewCount(item)">
       <img [src]="item.thumbnail_url" class="recruitment-position__img" alt="" />
     </a>
   </div>
   <div class="recruitment-position__context">
     <div class="recruitment-position__context-row">
       <h3 class="recruitment-position__title">
+        <!-- -->
         <a
           class="recruitment-position__title-link my-h5"
           data-toggle="tooltip"
           data-placement="top"
           title="{{ item.title }}"
+          (click)="increaseViewCount(item)"
           [routerLink]="['/tin-tuc/', item.slug]"
-          >{{ item.title }}</a
+        >{{ item.title }}</a
         >
       </h3>
       <button class="my-btn my-add-favorite__btn" [ngClass]="item.user_wishlist ? 'opacity-100' : ''">
@@ -27,15 +29,21 @@
     <div class="recruitment-position__context-recruitment">
       <i class="fa-regular fa-building"></i>
       <span class="recruitment-position__name-company my-xs"
-        >Doanh nghiệp:
-        <span class="recruitment-position__name-company-item" *ngFor="let company of item.postable.enterprise"
-          >{{ company.name }}
-        </span></span
-      >
+      >Doanh nghiệp:
+        <span *ngIf="item.postable">
+        <span class="recruitment-position__name-company-item" *ngFor="let company of item.postable.enterprise">
+          {{ company.name }}
+        </span>
+        </span>
+        <span *ngIf="!item.postable">Chưa có</span>
+      </span>
     </div>
     <div class="recruitment-position__context-row">
       <div class="">
         <p class="recruitment-position__desc my-xs" *ngIf="item.description" [innerHTML]="item.description"></p>
+      </div>
+      <div class="d-flex align-items-center mt-auto">
+        <i class="fa-regular fa-eye me-2"></i> <span>{{ item.view }}</span>
       </div>
     </div>
   </div>

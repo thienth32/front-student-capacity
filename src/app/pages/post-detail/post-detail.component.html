@@ -2,9 +2,14 @@
   <div class="container">
     <div class="post-main">
       <div class="post-main-content">
-        <h1 class="post-detail__title" *ngIf="statusPost">
-          {{ postDetail?.title }}
-        </h1>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h1 class="post-detail__title m-0" *ngIf="statusPost">
+            {{ postDetail?.title }}
+          </h1>
+          <div class="d-flex align-items-center">
+            <i class="fa-regular fa-eye ms-2 me-2"></i> <span>{{ postDetail?.view ?? 0 }}</span>
+          </div>
+        </div>
         <ngx-skeleton-loader
           *ngIf="!statusPost"
           [theme]="{
@@ -26,20 +31,30 @@
         </ngx-skeleton-loader>
         <div class="post-detail__head-info">
           <div *ngIf="statusPost" class="post-detail__head-info-item">
-            <span class="post-detail__head-info-item-cate">
-              Bài viết thuộc:
-              <a (click)="clickChangeUrlToCategoryPost(routeCategoryPost)" class="post-detail__router-category">
-                {{ postDetail?.postable_type }}
-              </a>
-            </span>
-            <app-list-social></app-list-social>
+            <p>
+              <span class="post-detail__head-info-item-cate">
+                Chuyên ngành:
+                <a (click)="clickChangeUrlToRecruitmentPostByMajor(postDetail?.major?.id)" class="post-detail__router-category">
+                  {{ postDetail?.major?.name ?? "Chưa có" }}
+                </a>
+              </span>
+            </p>
+            <p>
+              <span class="post-detail__head-info-item-cate">
+                Bài viết thuộc:
+                <a (click)="clickChangeUrlToCategoryPost(routeCategoryPost)" class="post-detail__router-category">
+                  {{ postDetail?.postable_type }}
+                </a>
+              </span>
+              <app-list-social></app-list-social>
+            </p>
           </div>
           <div *ngIf="statusPost" class="post-detail__head-info-item">
             <span class="post-detail__head-info-item-text"
-              ><i class="fa-solid fa-user"></i>&ensp; {{ postDetail?.user?.name }}</span
+              ><i class="fa-solid fa-building"></i>&ensp; {{ postDetail?.enterprise?.name }}</span
             >
             <span class="post-detail__head-info-item-text"
-              ><i class="fa-solid fa-clock"></i>&ensp; {{ postDetail?.published_at }}</span
+              ><i class="fa-solid fa-calendar"></i>&ensp; {{ postDetail?.deadline }}</span
             >
           </div>
         </div>
@@ -52,7 +67,6 @@
           appearance="line"
         >
         </ngx-skeleton-loader>
-        <div class="post-detail__short-desc" [innerHTML]="postDetail?.description"></div>
         <!-- Upload cv -->
         <div class="post_upload-cv text-center" *ngIf="postDetail?.postable_type == 'Tuyển dụng'">
           <button class="my-btn-primary my-btn-m" (click)="openModal()">Ứng tuyển ngay</button>
@@ -69,7 +83,8 @@
           >
           </ngx-skeleton-loader>
         </div>
-        <div class="post-detail__content-text" [innerHTML]="postDetail?.content"></div>
+<!--        <div class="post-detail__content-text" [innerHTML]="postDetail?.content"></div>-->
+        <div class="post-detail__content-text" [innerHTML]="content"></div>
         <!-- Upload cv -->
         <div class="post_upload-cv text-center" *ngIf="postDetail?.postable_type == 'Tuyển dụng'">
           <button class="my-btn-primary my-btn-m" (click)="openModal()">Ứng tuyển ngay</button>

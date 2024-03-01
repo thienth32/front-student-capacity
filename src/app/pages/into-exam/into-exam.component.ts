@@ -18,10 +18,13 @@ import { MatDialog } from "@angular/material/dialog";
 import { ModalInfoTeamComponent } from "src/app/modal/modal-info-team/modal-info-team.component";
 import { environment } from "src/environments/environment";
 import { GetValueLocalService } from "src/app/services/get-value-local.service";
-import { AlertErrorIntroExamComponent } from "src/app/component/alert-error-intro-exam/alert-error-intro-exam.component";
+import {
+  AlertErrorIntroExamComponent,
+} from "src/app/component/alert-error-intro-exam/alert-error-intro-exam.component";
 import { Location } from "@angular/common";
 import { ConfigFunctionService } from "src/app/services/config-function.service";
 import { Title } from "@angular/platform-browser";
+import { isUri } from "valid-url";
 
 @Component({
   selector: "app-into-exam",
@@ -54,6 +57,7 @@ export class IntoExamComponent implements OnInit {
   assignmentLinks: boolean = false;
   statusTakeExam: boolean = false;
   myForm: FormGroup;
+
   constructor(
     private modalService: NgbModal,
     private route: ActivatedRoute,
@@ -65,7 +69,8 @@ export class IntoExamComponent implements OnInit {
     private title: Title,
     private _location: Location,
     public configFunctionService: ConfigFunctionService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.title.setTitle("Vào thi");
@@ -325,10 +330,14 @@ export class IntoExamComponent implements OnInit {
 
   isValidURL(link: string) {
     console.log(link);
-    var urlRegex =
-      "^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$";
-    var regex = new RegExp(urlRegex, "i");
-    return link.length < 2083 && regex.test(link);
+    // var urlRegex =
+    //   "^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$";
+    // var urlRegex =
+    //   "^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\\.(?:[a-z\u00a1-\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$\n";
+    // var regex = new RegExp(urlRegex, "i");
+    // return link.length < 2083 && regex.test(link);
+    // alert(link.length < 2083 && isUri(link) ? "Valid URL" : "Invalid URL");
+    return link.length < 2083 && isUri(link);
   }
 
   displayedColumns: string[] = ["index", "name", "avatar", "email", "bot"];

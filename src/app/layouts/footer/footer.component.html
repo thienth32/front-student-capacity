@@ -45,9 +45,9 @@
         <div class="col-12 col-md-9 col-sm-12">
           <h4 class="footer-title-color fs-5 pb-3">HỆ THỐNG VĂN PHÒNG TUYỂN SINH</h4>
           <div class="row">
-            <div class="col-6">
-              <div>
-                <h6>Cơ sở Hà Nội</h6>
+            <div class="col-6" *ngFor="let group of groupBranches">
+              <div *ngFor="let branch of group">
+                <h6>Cơ sở {{ branch.name }}</h6>
                 <p>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -59,139 +59,21 @@
                   >
                     <path
                       d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
-                    /></svg
-                  >&nbsp; Tòa nhà FPT Polytechnic, phố Trịnh Văn Bô, phường Phương Canh, quận Nam Từ Liêm, TP Hà Nội
+                    />
+                  </svg
+                  >&nbsp; {{ branch.address }}
                 </p>
                 <p>
                   <i class="fa-solid fa-square-phone"></i>
-                  &nbsp; 024 6260 4713
+                  {{ branch.phone }}
                 </p>
                 <p>
                   <i class="fa-solid fa-square-envelope"></i>
-                  &nbsp; Qhdn.poly@fpt.edu.vn - Qhdn.poly@fe.edu.vn
+                  {{ branch.email }}
                 </p>
                 <p>
                   <i class="fab fa-facebook-square"></i>
-                  &nbsp; <a href="https://www.facebook.com/FpolyCorporateRelations">https://www.facebook.com/FpolyCorporateRelations</a>
-                </p>
-              </div>
-              <div>
-                <!-- <fa-duotone-icon [icon]="['fad', 'coffee']"></fa-duotone-icon> -->
-                <h6>Cơ sở Đà Nẵng</h6>
-                <p>
-                  <svg
-                    xmlns=" http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-geo-alt-fill footer-title-color"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
-                    /></svg
-                  >&nbsp;137 Nguyễn Thị Thập, phường Hòa Minh, quận Liên Chiểu, TP Đà Nẵng
-                </p>
-                <p>
-                  <i class="fa-solid fa-square-phone"></i>
-                  &nbsp; 0236 3506 877
-                </p>
-                <p>
-                  <i class="fa-solid fa-square-envelope"></i>
-                  &nbsp; qhdn.fpldn@fpt.edu.vn
-                </p>
-                <p>
-                  <i class="fab fa-facebook-square"></i>
-                  &nbsp; <a href="https://www.facebook.com/qhdnFpoly">https://www.facebook.com/qhdnFpoly</a>
-                </p>
-              </div>
-              <div>
-                <h6>Cơ sở Cần Thơ</h6>
-                <p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-geo-alt-fill footer-title-color"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
-                    /></svg
-                  >&nbsp;Toà nhà FPT Polytechnic, đường số 22, phường Thường Thạnh, quận Cái Răng, TP Cần Thơ
-                </p>
-                <p>
-                  <i class="fa-solid fa-square-phone"></i>
-                  &nbsp; 0292 7300 468
-                </p>
-                <p>
-                  <i class="fa-solid fa-square-envelope"></i>
-                  &nbsp; qhdn.fplct@fpt.edu.vn
-                </p>
-                <p>
-                  <i class="fab fa-facebook-square"></i>
-                  &nbsp; <a href="https://www.facebook.com/qhdnfplct">https://www.facebook.com/qhdnfplct</a>
-                </p>
-              </div>
-            </div>
-            <div class="col-6">
-              <div>
-                <h6>Cơ sở Hồ Chí Minh</h6>
-                <p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-geo-alt-fill footer-title-color"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
-                    /></svg
-                  >&nbsp;Đường Tô Ký, phường Tân Chánh Hiệp, quận 12, TP HCM
-                </p>
-                <p>
-                  <i class="fa-solid fa-square-phone"></i>
-                  &nbsp; 028 7308 8800
-                </p>
-                <p>
-                  <i class="fa-solid fa-square-envelope"></i>
-                  &nbsp; qhdn.fplhcm@fe.edu.vn
-                </p>
-                <p>
-                  <i class="fab fa-facebook-square"></i>
-                  &nbsp; <a href="https://www.facebook.com/FpolyHCM.QHDN">https://www.facebook.com/FpolyHCM.QHDN</a>
-                </p>
-              </div>
-              <div>
-                <h6>Cơ sở Tây Nguyên</h6>
-                <p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-geo-alt-fill footer-title-color"
-                    viewBox="0 0 16 16 "
-                  >
-                    <path
-                      d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
-                    /></svg
-                  >&nbsp;Tổ dân phố 8, phường Tân An, TP Buôn Ma Thuột, Đắk Lắk
-                </p>
-                <p>
-                  <i class="fa-solid fa-square-phone"></i>
-                  &nbsp;0988681933
-                </p>
-                <p>
-                  <i class="fa-solid fa-square-envelope"></i>
-                  &nbsp; qhdn.fpltn@fe.edu.vn
-                </p>
-                <p>
-                  <i class="fab fa-facebook-square"></i>
-                  &nbsp; <a href=" https://www.facebook.com/QHDNPolyTayNguyen"> https://www.facebook.com/QHDNPolyTayNguyen</a>
+                  &nbsp; <a href="{{ branch.website }}">{{ branch.website }}</a>
                 </p>
               </div>
             </div>

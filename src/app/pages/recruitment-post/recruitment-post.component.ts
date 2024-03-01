@@ -73,6 +73,7 @@ export class RecruitmentPostComponent implements OnInit {
     private router: Router,
     private location: Location,
     private route: ActivatedRoute,
+    private postService: ListPostService,
   ) {}
 
   statusFilter: Array<any> = [
@@ -100,7 +101,9 @@ export class RecruitmentPostComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       this.orderObj = { ...params };
     });
+    this.getListMajor();
 
+    console.log(this.orderObj.params);
     if (this.orderObj.params) {
       this.keyword = this.orderObj.params.keyword ? this.orderObj.params.keyword : "";
       this.major_id = this.orderObj.params.major_id ? this.orderObj.params.major_id : "";
@@ -114,9 +117,9 @@ export class RecruitmentPostComponent implements OnInit {
       this.filterRecruitments();
     }
 
-    this.getListMajor();
     this.getBranches();
     this.getAllSkill();
+
 
     window.addEventListener("scroll", this.noneSuggestFilter);
 
@@ -236,8 +239,18 @@ export class RecruitmentPostComponent implements OnInit {
     });
   }
 
+  increaseViewCount(item: Post) {
+    // this.job.luotView++;
+    const idPost = item.id;
+
+    // console.log(idPost);
+    this.postService.increaseViews(idPost).subscribe((res) => {
+        // console.log(res);
+    });
+
+  }
   getListMajor() {
-    this.majorService.getAll().subscribe((res) => {
+    this.majorService.getAllForRecruitment().subscribe((res) => {
       if (res.status) {
         this.majors = res.payload;
       }
@@ -304,7 +317,7 @@ export class RecruitmentPostComponent implements OnInit {
       });
     }
 
-    this.listPostService.searchPostRecruitment(this.keyword, this.branch_id).subscribe((res) => {
+    this.listPostService.searchPostRecruitment(this.keyword, this.branch_id, this.major_id, this.status).subscribe((res) => {
       if (res.status && res.payload.data.length > 0) {
         this.statusPostSearch = true;
         this.listPostResult = res.payload.data;

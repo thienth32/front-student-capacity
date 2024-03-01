@@ -70,8 +70,8 @@ export class ListPostService {
     );
   }
 
-  searchPostRecruitment(keyword: string, branch_id: string): Observable<ResponsePayload> {
-    return this.http.get<ResponsePayload>(`${environment.postListUrl}?keyword=${keyword}&branch_id=${branch_id}&post=post-recruitment`);
+  searchPostRecruitment(keyword: string, branch_id: string, major_id: string = '', postHot: string = ''): Observable<ResponsePayload> {
+    return this.http.get<ResponsePayload>(`${environment.postListUrl}?keyword=${keyword}&branch_id=${branch_id}&major_id=${major_id}&postHot=${postHot}&post=post-recruitment`);
   }
 
   // Post  recruitment  page trang chủ.
@@ -79,6 +79,14 @@ export class ListPostService {
     return this.http.get<ResponsePayload>(`${environment.postListUrl}?post=post-recruitment&limit=6`);
   }
 
+    // count view
+  increaseViews(id: number): Observable<ResponsePayload> {
+    const body = {
+      id: id,
+      view: 1
+    };
+    return this.http.post<ResponsePayload>(`${environment.updateViews}`,body);
+  }
   // Post  recruitment  page trang chủ.
   paydingRecruitmentPosition(index: number): Observable<ResponsePayload> {
     return this.http.get<ResponsePayload>(`${environment.postListUrl}?page=${index}&post=post-recruitment&limit=6`);

@@ -7,7 +7,7 @@ import { GetValueLocalService } from "src/app/services/get-value-local.service";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { UserService } from "src/app/services/user.service";
 import { WishlistService } from "src/app/services/wishlist.service";
-
+import { ListPostService } from "src/app/services/list-post.service";
 @Component({
   selector: "app-recruitment-position",
   templateUrl: "./recruitment-position.component.html",
@@ -21,6 +21,7 @@ export class RecruitmentPositionComponent implements OnInit {
     private countSave: LocalStorageService,
     private wishlist: WishlistService,
     private router: Router,
+    private postService: ListPostService,
   ) {}
 
   ngOnInit(): void {}
@@ -30,6 +31,7 @@ export class RecruitmentPositionComponent implements OnInit {
       type: "post",
       id: item.id,
     };
+    
     if (!this.userService.getValueLocalUser("user")) {
       this.countSave.setIsPopup(1);
     } else {
@@ -56,5 +58,16 @@ export class RecruitmentPositionComponent implements OnInit {
         });
       }
     }
+  }
+
+  increaseViewCount(item: Post) {
+    // this.job.luotView++;
+    const idPost = item.id;
+    
+    // console.log(idPost);
+    this.postService.increaseViews(idPost).subscribe((res) => {
+        // console.log(res);
+    });
+    
   }
 }

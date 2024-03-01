@@ -68,7 +68,7 @@
           </div>
           <a *ngFor="let item of branches" (click)="setValueFilterBranch(item)" class="text-collapse" ngbDropdownItem>{{
             item.name
-          }}</a>
+            }}</a>
         </div>
       </div>
       <div ngbDropdown class="d-inline-block w-100">
@@ -78,7 +78,7 @@
           formControlName="filterMajor"
           class="my-input w-100"
           placeholder="Chuyên ngành"
-          id="dropdownBasic1"
+          id="dropdownBasic2"
           ngbDropdownToggle
         />
         <div ngbDropdownMenu class="w-100 input__search-keyword--sugg" aria-labelledby="dropdownBasic1">
@@ -88,7 +88,7 @@
           </div>
           <a *ngFor="let item of majors" (click)="setValueFilterMajor(item)" class="text-collapse" ngbDropdownItem>{{
             item.name
-          }}</a>
+            }}</a>
         </div>
       </div>
       <div ngbDropdown class="d-inline-block w-100">
@@ -148,7 +148,8 @@
             Tin tức tuyển dụng
           </h2>
           <div class="d-flex justify-content-between algin-items-center">
-            <p *ngIf="!statusPostSearch && statusPost">Không tìm thấy bài viết theo kết quả tìm kiếm. Gợi ý nội dung:</p>
+            <p *ngIf="!statusPostSearch && statusPost">Không tìm thấy bài viết theo kết quả tìm kiếm. Gợi ý nội
+              dung:</p>
             <p *ngIf="statusPostSearch && statusPost">Kết quả tìm kiếm ({{ listPostResult.length }})</p>
             <p
               *ngIf="statusPost"
@@ -160,49 +161,81 @@
             </p>
           </div>
           <div *ngIf="statusPost" class="bg-white w-100 recruitment-list-hot-box">
-            <div class="p-3 recruitment-list-hot-reponsive">
+            <div class="p-3 recruitment-list-hot-reponsive test-capacity_list">
               <div *ngFor="let item of listPostResult" class="recruitment-list-hot-item-box"
-                routerLink="/tin-tuc/{{ item.slug }}"
+                   (click)="increaseViewCount(item)"
+                   routerLink="/tin-tuc/{{ item.slug }}"
               >
-                <div class="w-100">
-                  <img
-                    [src]="item.thumbnail_url"
-                    alt=""
-                    class="recruitment-list-hot-item-box-img"
-                  />
+                <div class="w-100 mb-3">
+<!--                  <img-->
+<!--                    [src]="item.thumbnail_url"-->
+<!--                    alt=""-->
+<!--                    class="recruitment-list-hot-item-box-img"-->
+<!--                  />-->
+                  <a
+                    [routerLink]="['/tin-tuc/', item.slug]"
+                    class="capacity__related-item-image"
+                    [ngStyle]="{ 'background-image': 'url(' + item.thumbnail_url + ')' }"
+                    title="{{ item.title }}"
+                  ></a>
+
+                </div>
+
+                <div class="d-flex align-items-center mt-auto justify-content-between capacity__related-content-time">
+                  <div class="post-item__info-item">
+                    <i class="fa-solid fa-clock"></i>&ensp;{{ item.published_at | formatDatePost }}
+                  </div>
+                  <div class="d-flex align-items-center mt-auto">
+                    <i class="fa-regular fa-eye ms-2 me-2"></i> <span>{{ item.view }}</span>
+                  </div>
                 </div>
                 <h3 class="post-item__title mt-2">
                   <a class="text-dark">{{ item.title }}</a>
                 </h3>
-                <div class="post-item-bottom">
-                  <p class="short-desc" *ngIf="item.description" [innerHTML]="item.description"></p>
-                  <!-- <a class="btn btn-detail" routerLink="/tin-tuc/{{ item.slug }}">Chi tiết</a> -->
-                </div>
+<!--                <div class="post-item-bottom">-->
+<!--                  <p class="short-desc" *ngIf="item.description" [innerHTML]="item.description"></p>-->
+<!--                  &lt;!&ndash; <a class="btn btn-detail" routerLink="/tin-tuc/{{ item.slug }}">Chi tiết</a> &ndash;&gt;-->
+<!--                </div>-->
                 <div class="post-item__info">
-                  <div
-                    class="post-item__info-item"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="{{ item.user.name }}"
-                  >
-                    <i class="fa-solid fa-user"></i>&ensp; {{ item.user.name }}
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                      <div
+                        class="post-item__info-item"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="{{ item.user.name }}"
+                      >
+                        <i class="fa-solid fa-user"></i>&ensp; {{ item.user.name }}
+                      </div>
+                    </div>
                   </div>
-                  <div class="post-item__info-item">
-                    <i class="fa-solid fa-clock"></i>&ensp;{{ item.published_at | formatDatePost }}
-                  </div>
+
                 </div>
+
+                <a
+                  class="w-100 my-btn-s my-btn-primary"
+                  routerLink="/tin-tuc/{{ item.slug }}"
+                >
+                  Chi tiết
+                </a>
               </div>
             </div>
           </div>
-          <div *ngIf="!statusPost" class="recruitment-list-hot-box-loading">
-            <ngx-skeleton-loader
-              [theme]="{
-                'height.px': '230',
-                'margin-bottom': '20'
-              }"
-              count="4"
-              animation="line"
-            ></ngx-skeleton-loader>
+          <div *ngIf="!statusPost" class="recruitment-list-hot-box-loading capacity__related-list row">
+            <div class="col col-lg-3 col-md-4 col-sm-12 col-12" *ngFor="let _ of [].constructor(8)">
+              <div>
+                <ngx-skeleton-loader [theme]="{ height: '150px' }"></ngx-skeleton-loader>
+
+                <ngx-skeleton-loader [theme]="{ margin: '0 0 4px' }"></ngx-skeleton-loader>
+
+                <ngx-skeleton-loader [theme]="{ margin: '0 0 4px', width: '50%', display: 'block' }">
+                </ngx-skeleton-loader>
+                <ngx-skeleton-loader [theme]="{ margin: '0 0 4px', width: '70%', display: 'block' }">
+                </ngx-skeleton-loader>
+
+                <ngx-skeleton-loader [theme]="{ height: '40px', margin: '6px 0 0' }"></ngx-skeleton-loader>
+              </div>
+            </div>
           </div>
         </div>
       </div>

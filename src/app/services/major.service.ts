@@ -17,6 +17,11 @@ export class MajorService {
     return this.http.get<ResponsePayload>(environment.majorListUrl);
   }
 
+  // Lấy tất cả chuyên ngành tuyển dụng
+  getAllForRecruitment(): Observable<ResponsePayload> {
+    return this.http.get<ResponsePayload>(`${environment.majorListUrl}/recruitment`);
+  }
+
   // Lấy chuyên ngành theo slug
   getMajorWhereSlug(slug: string): Observable<ResponsePayload> {
     return this.http.get<ResponsePayload>(`${environment.majorListUrl}/${slug}`);

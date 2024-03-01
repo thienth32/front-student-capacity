@@ -45,6 +45,33 @@
         <!-- End Validate Phone -->
       </div>
     </div>
+    <div class="row">
+      <div class="col mb-3">
+        <label class="form-label">Ngành học của bạn <span class="input-required">*</span></label>
+        <select formControlName="major_id" class="my-input" name="" id="">
+          <option value="" disabled selected>Chọn ngành học</option>
+          <option *ngFor="let major of majors" [value]="major.id">{{ major.name }}</option>
+        </select>
+        <!-- Validate Phone -->
+        <div class="my-error" *ngIf="major_id?.invalid && (major_id?.dirty || major_id?.touched)">
+          <span *ngIf="major_id?.errors?.['required']"> Vui lòng nhập thông tin ngành học của bạn! </span>
+        </div>
+        <!-- End Validate Phone -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mb-3">
+        <label class="form-label">Trạng thái học của bạn <span class="input-required">*</span></label>
+        <select formControlName="student_status" class="my-input" name="" id="">
+          <option *ngFor="let student_status of student_statuses" [value]="student_status.key">{{ student_status.value }}</option>
+        </select>
+        <!-- Validate Phone -->
+        <div class="my-error" *ngIf="student_status?.invalid && (student_status?.dirty || student_status?.touched)">
+          <span *ngIf="student_status?.errors?.['required']"> Vui lòng chọn trạng thái học tập của bạn! </span>
+        </div>
+        <!-- End Validate Phone -->
+      </div>
+    </div>
     <div class="mb-3">
       <label for="modalUploadCv" class="form-label">Upload CV <span class="input-required">*</span></label>
       <input

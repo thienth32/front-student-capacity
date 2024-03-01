@@ -294,6 +294,11 @@ export class RoundContestDetailComponent implements OnInit {
 
   //
   generateRandomInteger(min: number, max: number) {
-    return Math.floor(min + Math.random() * (max - min + 1));
+    // return Math.floor(min + Math.random() * (max - min + 1));
+
+    const array = new Uint32Array(1);
+    window.crypto.getRandomValues(array);
+    const randomValue = array[0] / (Math.pow(2, 32) - 1);
+    return Math.floor(min + randomValue * (max - min + 1));
   }
 }

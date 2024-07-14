@@ -298,6 +298,95 @@
             </div>
           </div>
         </div>
+        <div class="post-main-content-section">
+          <div class="header-section">
+            <h2 class="header-section__title">Bài viết Tin tức-Sự kiện</h2>
+            <a (click)="clickChangeUrlToCategoryPost('post-contest')" class="header-section__link">Tất cả</a>
+          </div>
+          <div class="main-section">
+            <div class="post-item-loading" *ngIf="!postEventFirst">
+              <app-post-load-item></app-post-load-item>
+            </div>
+            <!-- Ảnh 1 -->
+            <div class="post-item" *ngIf="postEventFirst">
+              <app-post-related-item [postItem]="postEventFirst"></app-post-related-item>
+            </div>
+            <!------------------------------- loading contest  -->
+            <div class="post-in-cate-list" *ngIf="!listPostEvent">
+              <div class="post-in-cate-item">
+                <div class="post-in-cate-item__img-section">
+                  <ngx-skeleton-loader [theme]="{ 'height.px': 100, 'border-radius': '8px' }" appearance="line">
+                  </ngx-skeleton-loader>
+                </div>
+                <div class="post-in-cate-item-content">
+                  <h3 class="post-in-cate-item-content__title">
+                    <ngx-skeleton-loader [theme]="{ 'height.px': 20, 'border-radius': '8px' }" appearance="line">
+                    </ngx-skeleton-loader>
+                  </h3>
+                  <ngx-skeleton-loader [theme]="{ 'height.px': 20, 'border-radius': '8px' }" appearance="line">
+                  </ngx-skeleton-loader>
+                  <div class=""></div>
+                </div>
+              </div>
+              <div class="post-in-cate-item">
+                <div class="post-in-cate-item__img-section">
+                  <ngx-skeleton-loader [theme]="{ 'height.px': 100, 'border-radius': '8px' }" appearance="line">
+                  </ngx-skeleton-loader>
+                </div>
+                <div class="post-in-cate-item-content">
+                  <h3 class="post-in-cate-item-content__title">
+                    <ngx-skeleton-loader [theme]="{ 'height.px': 20, 'border-radius': '8px' }" appearance="line">
+                    </ngx-skeleton-loader>
+                  </h3>
+                  <ngx-skeleton-loader [theme]="{ 'height.px': 20, 'border-radius': '8px' }" appearance="line">
+                  </ngx-skeleton-loader>
+                  <div class=""></div>
+                </div>
+              </div>
+              <div class="post-in-cate-item">
+                <div class="post-in-cate-item__img-section">
+                  <ngx-skeleton-loader [theme]="{ 'height.px': 100, 'border-radius': '8px' }" appearance="line">
+                  </ngx-skeleton-loader>
+                </div>
+                <div class="post-in-cate-item-content">
+                  <h3 class="post-in-cate-item-content__title">
+                    <ngx-skeleton-loader [theme]="{ 'height.px': 20, 'border-radius': '8px' }" appearance="line">
+                    </ngx-skeleton-loader>
+                  </h3>
+                  <ngx-skeleton-loader [theme]="{ 'height.px': 20, 'border-radius': '8px' }" appearance="line">
+                  </ngx-skeleton-loader>
+                  <div class=""></div>
+                </div>
+              </div>
+            </div>
+            <!-------------------------------  contest  -->
+            <div class="post-in-cate-list">
+              <div class="post-in-cate-item" *ngFor="let postEvent of listPostEvent">
+                <div class="post-in-cate-item__img-section">
+                  <a
+                    routerLink="/tin-tuc/{{ postEvent.slug }}"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="{{ postEvent.title }}"
+                  >
+                    <img src="{{ postEvent.thumbnail_url }}" alt="" class="post-in-cate-item__img" />
+                  </a>
+                </div>
+                <div class="post-in-cate-item-content">
+                  <h3 class="post-in-cate-item-content__title" data-toggle="tooltip" title="{{ postEvent.title }}">
+                    <a routerLink="/tin-tuc/{{ postEvent.slug }}">{{ postEvent.title }}</a>
+                  </h3>
+                  <div class="post-in-cate-item-content__info">
+                    <div class="post-in-cate-item-content__info-item">
+                      <i class="fa-solid fa-clock"></i>&ensp;{{ postEvent.published_at | formatDatePost }}
+                    </div>
+                  </div>
+                  <div class=""></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <app-aside-post></app-aside-post>
     </div>

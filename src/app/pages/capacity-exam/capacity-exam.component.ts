@@ -1,5 +1,14 @@
 import { LocalStorageService } from "./../../services/local-storage.service";
-import { Component, ElementRef, Inject, OnInit, QueryList, ViewChildren, OnDestroy } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  QueryList,
+  ViewChildren,
+  OnDestroy,
+  SimpleChanges,
+} from "@angular/core";
 import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DOCUMENT } from "@angular/common";
@@ -17,6 +26,8 @@ import { ExamCapacity, ResultExam, TestResultStorage } from "src/app/models/exam
 import { CapacityExamHistory } from "src/app/models/capacity";
 import { User } from "src/app/models/user";
 import { Title } from "@angular/platform-browser";
+import { ModalUploadCvComponent } from "../../modal/modal-upload-cv/modal-upload-cv.component";
+import { ModalInfoCapacityComponent } from "../../modal/modal-info-capacity/modal-info-capacity.component";
 
 @Component({
   selector: "app-capacity-exam",
@@ -41,6 +52,8 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
     minutes: "00",
     seconds: "00",
   };
+  examStatus: number | null = null;
+  prevExamStatus: number | null = null;
   // thông báo sắp hết giờ
   isNotiExamTimeOut = false;
   // trạng thái đang call api nộp bài
@@ -82,7 +95,8 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private localstorageService: LocalStorageService,
     @Inject(DOCUMENT) private document: any,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     // chặn f12, f11
@@ -119,87 +133,11 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
           // check login
           const user = this.userService.getUserValue();
           const jwtToken = this.userService.getJwtToken();
-          this.isLoggin = !!(user && jwtToken);
+          this.isLoggin = !!(Object.keys(user).length !== 0 && jwtToken);
           // nếu đã login ? check trạng thái làm bài : hiển thị màn hình chờ làm bài
           if (this.isLoggin) {
             this.userLogged = this.userService.getUserValue();
-            this.roundService
-              .getInfoCapacityExamRound({
-                round_id: responseRound.payload.id,
-              })
-              .subscribe(
-                ({ status, payload, result }) => {
-                  // nếu đang làm ? tiếp tục làm bài
-                  this.isFetchingSttExam = false;
-                  if (!status) return;
-                  if (payload === 0) {
-                    this.isContinueExam = true;
-                  } else if (payload === 1) {
-                    // đã nộp bài
-                    this.statusTakingExam = 2;
-                    const { minutes, seconds } = this.getMinutesAndSecondBetweenTwoDate(
-                      result.created_at,
-                      result.updated_at,
-                    );
-
-                    // tổng số giây làm bài
-                    const secondsExam = (+new Date(result.updated_at) - +new Date(result.created_at)) / 1000;
-
-                    // trạng thái nộp bài muộn
-                    const isLateSubmission =
-                      secondsExam >
-                      this.convertTimeExamToSeconds(this.roundDetail.time_exam, this.roundDetail.time_type_exam);
-
-                    this.resultExam = {
-                      capacityId: result.id,
-                      score: Number.isInteger(result.scores) ? result.scores.toString() : result.scores.toFixed(1),
-                      examTime: !+minutes ? `${seconds} giây` : `${minutes} phút ${seconds} giây`,
-                      submitAt:
-                        +moment(result.updated_at).format("YYYY") !== +new Date().getFullYear()
-                          ? moment(result.updated_at).format("DD [tháng] MM, YYYY [lúc] HH:mm")
-                          : moment(result.updated_at).format("DD [tháng] MM [lúc] HH:mm"),
-                      donotAnswer: result.donot_answer,
-                      falseAnswer: result.false_answer,
-                      trueAnswer: result.true_answer,
-                      isLateSubmission,
-                      maxPointExam: result.exam[0].max_ponit,
-                    };
-
-                    // clear data lịch sử làm bài của vòng trước
-                    this.examHistory = null as any;
-                  }
-                },
-                (error) => {
-                  //chưa làm bài
-                  // check trạng thái pass vòng thi trước
-                  const preRoundExits = this.getPreRound();
-                  if (preRoundExits.status) {
-                    const preRoundId = preRoundExits.round_id;
-
-                    this.roundService.getInfoCapacityExamRound({ round_id: preRoundId }).subscribe(
-                      (res) => {
-                        this.statusPreRound = {
-                          status: true,
-                          payload: res.payload,
-                          message: res.message,
-                        };
-                      },
-                      () => {
-                        this.statusPreRound = {
-                          status: false,
-                          message: "Chưa làm",
-                        };
-                        this.isFetchingSttExam = false;
-                      },
-                      () => {
-                        this.isFetchingSttExam = false;
-                      },
-                    );
-                    return;
-                  }
-                  this.isFetchingSttExam = false;
-                },
-              );
+            this.checkCapacity();
           } else {
             this.isFetchingSttExam = false;
           }
@@ -208,12 +146,125 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngDoCheck() {
+    if (this.examStatus !== this.prevExamStatus) {
+      if (this.examStatus == 0 || this.examStatus == 1) {
+        // Code khi examStatus thay đổi thành true
+        this.handleTakeExam();
+      } else if (this.examStatus == 2) {
+        // Code khi examStatus thay đổi thành false
+        this.dialog.open(DialogConfirmComponent, {
+          width: "450px",
+          data: {
+            title: "Thông báo",
+            description: "Bạn đã làm bài thi này rồi",
+            isNotShowBtnCancel: true,
+            textOk: "Đồng ý",
+          },
+        });
+      }
+      this.prevExamStatus = this.examStatus;
+    }
+  }
+
+  checkCapacity(): any {
+    const isOverrideExamStatus = this.isLoggin && Object.keys(this.userService.getUserValue()).length == 0;
+    this.roundService
+      .getInfoCapacityExamRound({
+        round_id: this.roundDetail.id,
+      })
+      .subscribe(
+        ({ status, payload, result }) => {
+          // nếu đang làm ? tiếp tục làm bài
+          this.isFetchingSttExam = false;
+          if (!status) return;
+          if (payload === 0) {
+            this.isContinueExam = true;
+            if (isOverrideExamStatus) this.examStatus = 1;
+          } else if (payload === 1) {
+            // đã nộp bài
+            if (isOverrideExamStatus) this.statusTakingExam = 2;
+            if (this.isLoggin) this.examStatus = 2;
+            const { minutes, seconds } = this.getMinutesAndSecondBetweenTwoDate(
+              result.created_at,
+              result.updated_at,
+            );
+
+            // tổng số giây làm bài
+            const secondsExam = (+new Date(result.updated_at) - +new Date(result.created_at)) / 1000;
+
+            // trạng thái nộp bài muộn
+            const isLateSubmission =
+              secondsExam >
+              this.convertTimeExamToSeconds(this.roundDetail.time_exam, this.roundDetail.time_type_exam);
+
+            this.resultExam = {
+              capacityId: result.id,
+              score: Number.isInteger(result.scores) ? result.scores.toString() : result.scores.toFixed(1),
+              examTime: !+minutes ? `${seconds} giây` : `${minutes} phút ${seconds} giây`,
+              submitAt:
+                +moment(result.updated_at).format("YYYY") !== +new Date().getFullYear()
+                  ? moment(result.updated_at).format("DD [tháng] MM, YYYY [lúc] HH:mm")
+                  : moment(result.updated_at).format("DD [tháng] MM [lúc] HH:mm"),
+              donotAnswer: result.donot_answer,
+              falseAnswer: result.false_answer,
+              trueAnswer: result.true_answer,
+              isLateSubmission,
+              maxPointExam: result.exam[0].max_ponit,
+            };
+
+            // clear data lịch sử làm bài của vòng trước
+            this.examHistory = null as any;
+          }
+        },
+        (error) => {
+          //chưa làm bài
+          if (isOverrideExamStatus) this.examStatus = 0;
+          // check trạng thái pass vòng thi trước
+          const preRoundExits = this.getPreRound();
+          if (preRoundExits.status) {
+            const preRoundId = preRoundExits.round_id;
+
+            this.roundService.getInfoCapacityExamRound({ round_id: preRoundId }).subscribe(
+              (res) => {
+                this.statusPreRound = {
+                  status: true,
+                  payload: res.payload,
+                  message: res.message,
+                };
+              },
+              () => {
+                this.statusPreRound = {
+                  status: false,
+                  message: "Chưa làm",
+                };
+                this.isFetchingSttExam = false;
+              },
+              () => {
+                this.isFetchingSttExam = false;
+              },
+            );
+            return;
+          }
+          this.isFetchingSttExam = false;
+
+          return false;
+        },
+      );
+  }
+
   ngOnDestroy(): void {
     this.handleRemoveAllEvent();
   }
 
   // làm bài
   handleTakeExam() {
+
+    if (!this.isLoggin && this.roundDetail.access_from_outside == 1) {
+      this.openUserInfoModal();
+      return;
+    }
+
     const confimExamRef = this.dialog.open(DialogConfirmComponent, {
       width: "450px",
       data: {
@@ -227,6 +278,7 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
 
     confimExamRef.afterClosed().subscribe((res) => {
       if (res === "true") {
+
         // check user logged
         if (!this.isLoggin) {
           this.localstorageService.setIsPopup(1);
@@ -417,6 +469,7 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   // nộp bài
   submitExam() {
     const answersData = this.getAnswersData();
@@ -465,7 +518,8 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
           this.isLoggin = false;
 
           // remove event listener
-          window.onresize = () => {};
+          window.onresize = () => {
+          };
 
           // mặc định chặn f12, f11
           window.onkeydown = (e: any) => {
@@ -741,6 +795,64 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
     });
   }
 
+  openUserInfoModal() {
+    const registerInfoModalDialog = this.dialog.open(ModalInfoCapacityComponent, {
+      width: "700px",
+    });
+
+    registerInfoModalDialog.afterClosed().subscribe((result: any) => {
+      if (result && typeof result !== "string") {
+        this.dialog.open(DialogConfirmComponent, {
+          width: "500px",
+          disableClose: true,
+          data: {
+            description:
+              "Vui lòng không thoát ứng dụng.",
+            isNotShowBtn: true,
+            title: "Đang kiểm tra thông tin người dùng...",
+            isShowLoading: true,
+          },
+        });
+
+        this.userService.registerCapacity(result).subscribe(async res => {
+          this.dialog.closeAll();
+          let msg = "";
+
+          let title = "";
+
+          if (res.status == false) {
+            title = "Đã xảy ra lỗi";
+            msg = "Có lỗi khi kiểm tra thông tin người dùng";
+            this.dialog.open(DialogConfirmComponent, {
+              width: "500px",
+              disableClose: false,
+              data: {
+                isNotShowBtnCancel: true,
+                title: title,
+                description: msg,
+              },
+            });
+
+          } else {
+
+            title = "Thông báo";
+
+            msg = "Kiểm tra thông tin người dùng thành công!";
+
+            // console.log(res.payload);
+
+            this.userService.loginLocal(res.payload);
+
+            this.isLoggin = true;
+
+            this.checkCapacity();
+          }
+        });
+
+      }
+    });
+  }
+
   // get vòng thi trước
   getPreRound() {
     let preRound: { status: boolean; round_id?: number };
@@ -863,6 +975,37 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
     if (e.keyCode == 123) {
       this.disabledEvent(e);
     }
+
+    // Ctrl + Tab
+    if (e.ctrlKey && e.keyCode == 9) {
+      this.disabledEvent(e);
+    }
+
+    // Ctrl + Shift + Tab
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 9) {
+      this.disabledEvent(e);
+    }
+
+    // Ctrl + Up arrow
+    if (e.ctrlKey && e.keyCode == 38) {
+      this.disabledEvent(e);
+    }
+
+    // Command + ` (MacOS)
+    if (e.keyCode == 192 && e.mateKey) {
+      this.disabledEvent(e);
+    }
+
+    // Alt + Tab
+    if (e.keyCode == 9 && e.altKey) {
+      this.disabledEvent(e);
+    }
+
+    // Windows + Tab
+    if (e.keyCode == 9 && e.metaKey) {
+      this.disabledEvent(e);
+    }
+
     if (e.ctrlKey && (e.key == "p" || e.charCode == 16 || e.charCode == 112 || e.keyCode == 80)) {
       e.cancelBubble = true;
       e.preventDefault();
@@ -887,9 +1030,13 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
 
   // remove all event in page
   handleRemoveAllEvent() {
-    window.onresize = () => {};
-    window.onkeydown = () => {};
-    window.oncontextmenu = () => {};
+    window.onresize = () => {
+    };
+    window.onkeydown = (e: any) => {
+      this.disabledEvent(e);
+    };
+    window.oncontextmenu = () => {
+    };
   }
 
   // get thời gian làm bài
@@ -978,7 +1125,8 @@ export class CapacityExamComponent implements OnInit, OnDestroy {
             data: this.examHistory,
           });
         },
-        () => {},
+        () => {
+        },
         () => (this.isFetchingHistoryExam = false),
       );
     } else {

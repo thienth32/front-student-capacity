@@ -1,0 +1,61 @@
+.nav-tabs-custom .nav-item .nav-link.active {
+    color: #ff6638;
+}
+.nav-tabs-custom .nav-item .nav-link {
+    border: none;
+    color: #000;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.text-muted {
+    color: #000!important;
+}
+.nav-tabs-custom .nav-item {
+    position: relative;
+    color: #000;
+    
+}
+.nav-tabs-custom .nav-item .nav-link.active:after {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+.nav-tabs-custom .nav-item .nav-link::after {
+    content: "";
+    background: #ff6638;
+    height: 2px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: -1px;
+    -webkit-transition: all 250ms ease 0s;
+    transition: all 250ms ease 0s;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+.title-faq {
+    font-size: 30px;
+}
+
+.accordion-button {
+    border-radius: 15px;
+}
+
+.accordion-button:focus{
+    box-shadow: none;
+
+}
+
+.accordion-button:not(.collapsed) { 
+    color: #fff;
+    background-color: #ff6638;
+    /* border-radius: 15px; */
+}
+
+.accordion-body {
+    padding: 1.25rem 1rem;
+}
+
+.accordion-header{
+    margin: 0;
+}

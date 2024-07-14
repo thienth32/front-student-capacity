@@ -16,6 +16,9 @@ export class PostsComponent implements OnInit {
   postContestFirst: Post;
   listPostContest: Post[];
 
+  postEventFirst: Post;
+  listPostEvent: Post[];
+
   postCapacityFirst: Post;
   listPostCapacity: Post[];
 
@@ -36,6 +39,7 @@ export class PostsComponent implements OnInit {
     this.getListPostRecruitment();
     this.getListPostCapacity();
     this.getListPostContest();
+    this.getListEvent();
   }
 
   // Change screen back top
@@ -66,6 +70,20 @@ export class PostsComponent implements OnInit {
         let arrResult = res.payload.data;
         this.postContestFirst = arrResult[0];
         this.listPostContest = arrResult.filter((res: Post, index: number) => {
+          return index <= 2;
+        });
+      }
+    });
+  }
+
+  getListEvent() {
+    this.postService.getPostByCategory("post-event", "1").subscribe((res) => {
+      if (res.status) {
+        let arrResult = res.payload.data;
+        console.log(arrResult);
+
+        this.postEventFirst = arrResult[0];
+        this.listPostEvent = arrResult.filter((res: Post, index: number) => {
           return index <= 2;
         });
       }

@@ -104,6 +104,12 @@
             </a>
           </li>
 
+          <li class="nav-item" routerLinkActive="active">
+            <a class="fw-bold menu-mobile__item-link nav-link-item text-decoration-none" routerLink="/hoi-dap">
+              Hỏi đáp
+            </a>
+          </li>
+
           <li *ngIf="user && checkEmpty(user)" (click)="openSaveInfo()" class="open-save-info">
             <i
               matBadgePosition="after"

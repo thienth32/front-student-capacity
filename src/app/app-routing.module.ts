@@ -28,6 +28,7 @@ import { RankCapacityComponent } from "./pages/rank-capacity/rank-capacity.compo
 import { RankContestComponent } from "./pages/rank-contest/rank-contest.component";
 import { ChallengeComponent } from "./pages/challenge/challenge.component";
 import { ChallengeExamComponent } from "./pages/challenge-exam/challenge-exam.component";
+import { QuestionAndAnswerComponent } from "./pages/question-and-answer/question-and-answer.component";
 
 const routes: Routes = [
   {
@@ -47,6 +48,11 @@ const routes: Routes = [
         path: "tin-tuc",
         data: { title: "Bài viết" },
         component: PostsComponent,
+      },
+      {
+        path: "hoi-dap",
+        data: { title: "Hỏi đáp" },
+        component: QuestionAndAnswerComponent
       },
       {
         path: "xep-hang-cuoc-thi",
@@ -164,4 +170,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

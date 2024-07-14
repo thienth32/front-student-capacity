@@ -18,6 +18,7 @@ export const environment = {
   recruitment: `${publicApiUrl}/recruitments`,
   capacityListUrl: `${publicApiUrl}/capacity`,
   postListUrl: `${publicApiUrl}/posts`,
+  updateViews: `${publicApiUrl}/posts/view`,
   candidateUrl: `${publicApiUrl}/candidate`,
   skillListUrl: `${publicApiUrl}/skill`,
   keywordListUrl: `${publicApiUrl}/keywords`,
@@ -25,6 +26,9 @@ export const environment = {
   RankCapacityUrl: `${publicApiUrl}/rating/major-capacity`,
   challengeListUrl: `${publicApiUrl}/challenge`,
   codeLanguageListUrl: `${publicApiUrl}/code-language`,
+  studentStatusListUrl: `${publicApiUrl}/student-statuses`,
+  userUrl: `${publicApiUrl}/users`,
+  qaUrl: `${publicApiUrl}/qa`,
 
   // Router API V1;
   userListUrl: `${jwtApiUrl}/users`,

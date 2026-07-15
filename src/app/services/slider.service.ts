@@ -23,4 +23,9 @@ export class SliderService {
       params,
     });
   }
+
+  //lấy thông số cho trang chủ
+  getListStat(): Observable<ResponsePayload> {
+    return this.http.get<ResponsePayload>(`${environment.stats}`);
+  }
 }

@@ -1,0 +1,16 @@
+<div class="stats-container">
+    <div class="stat-card" *ngFor="let stat of stats">
+        <img
+            *ngIf="stat.icon"
+            class="stat-icon"
+            [src]="stat.icon"
+            [alt]="stat.name"
+        />
+        <div class="stat-number">
+            <span [countUp]="stat.type == 1 ? stat.data[0].value : stat.value" [duration]="2000"></span>+
+        </div>
+        <div class="stat-label">
+            {{ stat.type == 1 ? stat.data[0].unit : stat.unit }}
+        </div>
+    </div>
+</div>

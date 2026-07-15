@@ -1,0 +1,67 @@
+<app-banner [page]="page"></app-banner>
+<div class="wraper">
+  <div class="section section-bg--2 my-2">
+    <div class="container">
+      <h3 class="section__title my-h3 text-center">DANH SÁCH MENTOR</h3>
+      <div *ngIf="isLoading" class="row g-3">
+        <ngx-skeleton-loader
+          class="col-12 col-md-6"
+          [theme]="{
+            'height.px': '200',
+            'margin-top': '20'
+          }"
+          count="3"
+          animation="line"
+        ></ngx-skeleton-loader>
+        <ngx-skeleton-loader
+          class="col-12 col-md-6"
+          [theme]="{
+            'height.px': '200',
+            'margin-top': '20'
+          }"
+          count="3"
+          animation="line"
+        ></ngx-skeleton-loader>
+      </div>
+      <div *ngIf="!isLoading">
+        <div *ngIf="mentors.length > 0" class="row g-3">
+          <div
+            *ngFor="let mentor of mentors"
+            class="col-12 col-md-6"
+          >
+            <div class="mentor-card h-100">
+              <app-mentor-item [mentor]="mentor"></app-mentor-item>
+            </div>
+          </div>
+        </div>
+        <div class="pagination" *ngIf="!isLoading">
+          <ul class="pagination-list">
+            <li
+              class="pagination-list_box pagination-list_first"
+              (click)="paginationPages(first_page_url, false, '1', $event)"
+            >
+              <i class="fa-solid fa-angles-left"></i>
+            </li>
+            <li
+              class="pagination-list_box pagination-item"
+              *ngFor="let page of links"
+              [ngClass]="page.active ? 'active' : ''"
+              (click)="paginationPages(page.url, page.active, page.label, $event)"
+            >
+              {{ page.label }}
+            </li>
+            <li
+              class="pagination-list_box pagination-list_last"
+              (click)="paginationPages(last_page_url, false, last_page, $event)"
+            >
+              <i class="fa-solid fa-angles-right"></i>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="mentors.length == 0">
+          <h1 class="text-center">Không có dữ liệu</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@
   <nav class="container d-flex justify-content-between align-items-center">
     <!-- icon bar mobile -->
     <div class="nav-response flex-2 d-block d-lg-none">
-      <div class="icon-open-nav-mobile d-inline-block" (click)="handleToggleMenuMobile()">
+      <div class="icon-open-nav-mobile d-inline-block" (click)="handleToggleMenuMobile(true)">
         <i class="fas fa-bars"></i>
       </div>
     </div>
@@ -14,54 +14,46 @@
     <div class="menu-desktop d-none d-lg-flex align-self-stretch">
       <div class="d-flex" id="menu_login-box">
         <ul class="nav menu_login-box d-flex align-items-center mr-auto home-nav pr-2">
-          <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="fw-bold menu-mobile__item-link text-decoration-none nav-link-item" routerLink="/">Trang chủ</a>
-          </li>
-
-          <li class="nav-item" routerLinkActive="active">
+          <li
+            *ngFor="let item of menu"
+            class="nav-item"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.exact || false }"
+          >
+            <!-- Nếu KHÔNG có children -->
             <a
-              class="fw-bold menu-mobile__item-link nav-link-item text-decoration-none"
-              [routerLink]="['/danh-gia-nang-luc']"
+              *ngIf="!item.children"
+              class="fw-bold nav-link-item text-decoration-none"
+              [routerLink]="item.link"
             >
-              Đánh giá năng lực
+              {{ item.label }}
             </a>
-          </li>
 
-          <li class="nav-item" routerLinkActive="active">
-            <a class="fw-bold menu-mobile__item-link nav-link-item text-decoration-none" [routerLink]="['/cuoc-thi']">
-              Cuộc thi
-            </a>
-          </li>
-
-          <li class="nav-item align-self-stretch d-flex align-items-center" routerLinkActive="active">
+            <!-- Nếu có children -->
             <div
-              class="fw-bold menu-mobile__item-link position-relative text-decoration-none nav-link-item p-0 d-flex align-items-center"
+              *ngIf="item.children"
+              class="fw-bold nav-link-item d-flex align-items-center position-relative"
             >
-              <span>Tuyển dụng</span>
-              <div class="nav-item__icon">
-                <i class="fa-solid fa-caret-down"></i>
-              </div>
+              <span>{{ item.label }}</span>
+              <i class="fa-solid fa-caret-down nav-item__icon"></i>
 
               <ul class="sub-menu position-absolute">
-                <li class="sub-menu__item" routerLinkActive="active">
+                <li
+                  *ngFor="let child of item.children"
+                  class="sub-menu__item"
+                  routerLinkActive="active"
+                >
                   <a
-                    class="fw-bold menu-mobile__item-link sub-menu__link fw-bold menu-mobile__item-link nav-link-item text-decoration-none"
-                    [routerLink]="['/tin-tuc-tuyen-dung']"
+                    class="sub-menu__link nav-link-item text-decoration-none"
+                    [routerLink]="child.link"
                   >
-                    Tin tức tuyển dụng
-                  </a>
-                </li>
-                <li class="sub-menu__item" routerLinkActive="active">
-                  <a
-                    class="fw-bold menu-mobile__item-link sub-menu__link fw-bold menu-mobile__item-link nav-link-item text-decoration-none"
-                    [routerLink]="['/dot-tuyen-dung-doanh-nghiep']"
-                  >
-                    Đợt tuyển dụng với doanh nghiệp
+                    {{ child.label }}
                   </a>
                 </li>
               </ul>
             </div>
           </li>
+        </ul>
           <!-- <li class="nav-item" routerLinkActive="active">
             <a class="fw-bold menu-mobile__item-link nav-link-item text-decoration-none" [routerLink]="['/tuyen-dung']">
               Tuyển dụng
@@ -97,10 +89,9 @@
               </ul>
             </div>
           </li> -->
-
-          <li class="nav-item" routerLinkActive="active">
-            <a class="fw-bold menu-mobile__item-link nav-link-item text-decoration-none" routerLink="/tin-tuc">
-              Tin tức
+          <!-- <li class="nav-item" routerLinkActive="active">
+            <a class="fw-bold menu-mobile__item-link nav-link-item text-decoration-none" routerLink="/hoi-dap">
+              Hỏi đáp
             </a>
           </li>
 
@@ -111,15 +102,15 @@
               class="fa-solid fs-5 fa-bookmark"
               matBadgeColor="warn"
             ></i>
-          </li>
+          </li> -->
 
-          <li *ngIf="!user || !checkEmpty(user)" class="btn-login-desktop d-none d-lg-block">
+          <!-- <li *ngIf="!user || !checkEmpty(user)" class="btn-login-desktop d-none d-lg-block">
             <a (click)="handleLogin()">
               <button class="my-btn-primary my-btn-s">Đăng nhập</button>
             </a>
-          </li>
+          </li> -->
 
-          <li *ngIf="user && checkEmpty(user)">
+          <!-- <li *ngIf="user && checkEmpty(user)">
             <img
               *ngIf="user.avatar"
               mat-icon-button
@@ -138,7 +129,7 @@
               </button>
             </mat-menu>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
 
@@ -153,11 +144,11 @@
         ></i>
       </li>
 
-      <li *ngIf="!user || !checkEmpty(user)">
+      <!-- <li *ngIf="!user || !checkEmpty(user)">
         <a (click)="handleLogin()">
           <button class="my-btn my-btn-primary my-btn-xs">Đăng nhập</button>
         </a>
-      </li>
+      </li> -->
 
       <li *ngIf="user && checkEmpty(user)">
         <img
@@ -234,6 +225,73 @@
 
 <!-- menu mobile -->
 <div class="menu-mobile" [ngClass]="{ active: isOpenMenuMobile }">
+  <!-- overlay -->
+  <div class="menu-mobile__overlay" (click)="handleToggleMenuMobile(true)"></div>
+
+  <!-- menu -->
+  <div class="menu-response">
+
+    <!-- header -->
+    <div class="menu-header d-flex justify-content-between align-items-center">
+      <span>Menu</span>
+      <i class="fas fa-times" (click)="handleToggleMenuMobile(true)"></i>
+    </div>
+
+    <!-- menu list -->
+    <ul class="menu-res">
+      <li *ngFor="let item of menu" class="menu-res-item">
+
+        <!-- item thường -->
+        <a
+          *ngIf="!item.children"
+          (click)="handleToggleMenuMobile(false)"
+          [routerLink]="item.link"
+          routerLinkActive="active"
+          class="menu-mobile__item-link"
+        >
+          {{ item.label }}
+        </a>
+
+        <!-- item có children -->
+        <div *ngIf="item.children">
+
+          <!-- parent -->
+          <div
+            class="menu-mobile__item-link parent"
+            (click)="toggleMobileSubMenu(item)"
+          >
+            <span>{{ item.label }}</span>
+
+            <i
+              class="fa-solid fa-chevron-down"
+              [ngClass]="{ rotate: openSubMenu === item }"
+            ></i>
+          </div>
+
+          <!-- children -->
+          <ul
+            class="submenu"
+            *ngIf="openSubMenu === item"
+          >
+            <li *ngFor="let child of item.children">
+              <a
+                (click)="handleToggleMenuMobile(false)"
+                [routerLink]="child.link"
+                routerLinkActive="active"
+              >
+                {{ child.label }}
+              </a>
+            </li>
+          </ul>
+
+        </div>
+
+      </li>
+    </ul>
+
+  </div>
+</div>
+<!-- <div class="menu-mobile" [ngClass]="{ active: isOpenMenuMobile }">
   <div class="menu-mobile__overlay" (click)="handleToggleMenuMobile()"></div>
 
   <div class="menu-response">
@@ -242,8 +300,45 @@
         <i class="fas fa-times"></i>
       </div>
     </div>
+    <ul class="menu-res mt-5 border-top" *ngIf="openSubMenu === item" class="submenu">
+      <li *ngFor="let item of menu" class="menu-res-item">
+        <a
+          *ngIf="!item.children"
+          (click)="handleToggleMenuMobile()"
+          [routerLink]="item.link"
+          class="fw-bold menu-mobile__item-link"
+        >
+          {{ item.label }}
+        </a>
 
-    <ul class="menu-res mt-5 border-top">
+        <div *ngIf="item.children">
+          <div
+            class="fw-bold menu-mobile__item-link d-flex justify-content-between"
+            (click)="toggleMobileSubMenu(item)"
+          >
+            <span>{{ item.label }}</span>
+            <i
+              class="fa-solid fa-chevron-down"
+              [ngClass]="{ 'rotate': openSubMenu === item }"
+            ></i>
+          </div>
+
+          <ul *ngIf="openSubMenu === item" class="pl-3">
+            <li *ngFor="let child of item.children">
+              <a
+                (click)="handleToggleMenuMobile()"
+                [routerLink]="child.link"
+                class="menu-mobile__item-link"
+              >
+                {{ child.label }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </li>
+    </ul> -->
+    <!-- <ul class="menu-res mt-5 border-top">
       <li class="menu-res-item menu-mobile__item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a
           (click)="handleToggleMenuMobile()"
@@ -309,6 +404,6 @@
           Tin tức
         </a>
       </li>
-    </ul>
-  </div>
-</div>
+    </ul> -->
+  <!-- </div>
+</div> -->

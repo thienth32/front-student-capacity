@@ -26,6 +26,32 @@ export class HeaderComponent implements OnInit {
   isLogin: boolean = false;
   countInfoSaveItem: number = 0;
   isChangeSave: boolean = false;
+  menu: Array<any> = [
+    { label: 'Trang chủ', link: '/', exact: true },
+    { label: 'Về chúng tôi', link: '/gioi-thieu' },
+
+    {
+      label: 'Hoạt động',
+      children: [
+        { label: 'Tin tức', link: '/tin-tuc' },
+        { label: 'Cuộc thi', link: '/cuoc-thi' },
+        { label: 'Dịch vụ việc làm', link: '/dich-vu' },
+        { label: 'Mentorship', link: '/chuong-trinh-mentor' },
+        { label: 'Ngày hội việc làm', link: '/ngay-hoi-viec-lam' },
+        { label: 'Vườn ươm khởi nghiệp', link: '/vuon-uom-khoi-nghiep' },
+        { label: 'Đặc quyền sinh viên', link: '/dac-quyen-sinh-vien' },
+      ],
+    },
+    {
+      label: 'Tuyển dụng',
+      children: [
+        { label: 'Tin tức tuyển dụng', link: '/tin-tuc-tuyen-dung' },
+        { label: 'Đợt tuyển dụng', link: '/dot-tuyen-dung-doanh-nghiep' },
+      ],
+    },
+    { label: 'Hỏi đáp', link: '/hoi-dap' },
+  ];
+  openSubMenu: any = null;
 
   constructor(
     private userService: UserService,
@@ -133,6 +159,15 @@ export class HeaderComponent implements OnInit {
     document.querySelector(".overlay")?.classList.remove("d-none");
   }
 
+  scrollToContactForm() {
+    if (window.location.pathname == '/') {
+      const contactForm = document.querySelector("#contactForm");
+      contactForm?.scrollIntoView(false);
+    } else {
+      this.router.navigateByUrl("/#contactForm");
+    }
+  }
+
   closeSaveInfo(status: boolean) {
     const menuRes = document.querySelector(".sidepanel");
     const overlay = document.querySelector(".overlay");
@@ -144,6 +179,10 @@ export class HeaderComponent implements OnInit {
     const overlay = document.querySelector(".overlay");
   }
 
+  toggleMobileSubMenu(item: any) {
+    this.openSubMenu = this.openSubMenu === item ? null : item;
+  }
+
   // LogOut
   logOut() {
     localStorage.clear();
@@ -153,8 +192,8 @@ export class HeaderComponent implements OnInit {
   }
 
   // toggle menu mobile
-  handleToggleMenuMobile() {
-    this.isOpenMenuMobile = !this.isOpenMenuMobile;
+  handleToggleMenuMobile(value: boolean) {
+    this.isOpenMenuMobile = value ?? !this.isOpenMenuMobile;
   }
 
   backStatusPopup(event: any) {

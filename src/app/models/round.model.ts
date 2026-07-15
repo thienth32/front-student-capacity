@@ -37,6 +37,7 @@ export class CapacityRound {
   max_questions_exam: number;
   time_exam: number;
   time_type_exam: number;
+  access_from_outside: number;
 }
 
 class exams {

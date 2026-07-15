@@ -20,12 +20,13 @@ export class ContestComponent implements OnInit {
   major_id: any;
   major_slug: any;
   contests: Array<Contest> = [];
-  keyworkSearchContest: string;
+  keywordSearchContest: string;
   orderObj: any;
   statusContest: boolean = false;
   statusMajor: boolean = false;
   checkUserHasLogin: boolean = false;
   statusCurrContest: number = 0;
+  contestType: any;
 
   constructor(
     public majorService: MajorService,
@@ -34,7 +35,7 @@ export class ContestComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title,
-    private configFuntionService: ConfigFunctionService,
+    private configFunctionService: ConfigFunctionService,
   ) {}
 
   formSearchMajor = new FormGroup({
@@ -47,7 +48,7 @@ export class ContestComponent implements OnInit {
 
   ngOnInit(): void {
     // Load lên đầu trang
-    this.configFuntionService.runTop();
+    this.configFunctionService.runTop();
 
     this.userService.getUserValue().id != undefined ? (this.checkUserHasLogin = true) : this.checkUserHasLogin;
 
@@ -57,8 +58,8 @@ export class ContestComponent implements OnInit {
 
     if (this.orderObj.params.status || this.orderObj.params.keyword) {
       this.statusCurrContest = this.orderObj.params.status;
-      this.keyworkSearchContest = this.orderObj.params.keyword;
-      this.formSearchContest.controls["keywordContest"].setValue(this.keyworkSearchContest);
+      this.keywordSearchContest = this.orderObj.params.keyword;
+      this.formSearchContest.controls["keywordContest"].setValue(this.keywordSearchContest);
     }
 
     if (this.orderObj.params.major_id) {
@@ -99,7 +100,7 @@ export class ContestComponent implements OnInit {
   // Tìm kiếm cuộc thi
   searchContest() {
     this.statusContest = false;
-    this.keyworkSearchContest = this.formSearchContest.controls["keywordContest"].value;
+    this.keywordSearchContest = this.formSearchContest.controls["keywordContest"].value;
     this.filterContest();
   }
 
@@ -123,6 +124,15 @@ export class ContestComponent implements OnInit {
     this.getAllMajor();
   }
 
+  resetType() {
+    this.contestType = null;
+    const types = document.querySelectorAll(".contest__content-aside-type--item");
+    types.forEach((element) => {
+      element.classList.remove("active");
+    });
+    this.filterContest();
+  }
+
   // Update status  contest
   updateStatusContest(event: any, status: number) {
     if (this.statusContest) {
@@ -142,17 +152,18 @@ export class ContestComponent implements OnInit {
     this.router.navigate(["/cuoc-thi"], {
       queryParams: {
         status: this.statusCurrContest,
-        keyword: this.keyworkSearchContest,
+        keyword: this.keywordSearchContest,
         major: this.major_slug,
+        type: this.contestType,
       },
       queryParamsHandling: "merge",
     });
     this.contestService
-      .filterContest(this.keyworkSearchContest, this.major_id, this.statusCurrContest)
+      .filterContest(this.keywordSearchContest, this.major_id, this.statusCurrContest, this.contestType)
       .subscribe((res) => {
         if (res.status) {
           this.statusContest = true;
-          let contests = res.payload;
+          let contests = res.payload.data;
           let today = new Date().getTime();
           if (this.statusCurrContest == 1) {
             this.contests = [];
@@ -170,7 +181,7 @@ export class ContestComponent implements OnInit {
           }
         }
       });
-    this.configFuntionService.runTop();
+    this.configFunctionService.runTop();
   }
 
   getTime(item: Contest) {
@@ -193,6 +204,17 @@ export class ContestComponent implements OnInit {
     this.major_slug = item.slug;
     this.major_id = item.id;
     event.currentTarget.classList.add("active");
+    this.filterContest();
+  }
+
+  getByType(event: any, type: number) {
+    const types = document.querySelectorAll(".contest__content-aside-type--item");
+    types.forEach((element) => {
+      element.classList.remove("active");
+    });
+    
+    event.currentTarget.classList.add("active");
+    this.contestType = type;
     this.filterContest();
   }
 }

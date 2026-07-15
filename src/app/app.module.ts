@@ -94,6 +94,25 @@ import { RankContestComponent } from "./pages/rank-contest/rank-contest.componen
 import { ChallengeExamComponent } from "./pages/challenge-exam/challenge-exam.component";
 import { ChallengeComponent } from "./pages/challenge/challenge.component";
 import { ModalSubmitChallengeSuccessComponent } from "./modal/modal-submit-challenge-success/modal-submit-challenge-success.component";
+import { ModalInfoCapacityComponent } from './modal/modal-info-capacity/modal-info-capacity.component';
+
+import { QuestionAndAnswerComponent } from './pages/question-and-answer/question-and-answer.component';
+import { QACategoryComponent } from "./component/qa-category/qa-category.component";
+import { ContactCompanyComponent } from './component/contact-company/contact-company.component';
+import { DetailFaqComponent } from "./pages/detail-faq/detail-faq.component";
+import { ModalDownRateComponent } from "./modal/modal-down-rate/modal-down-rate.component";
+import { IntroComponent } from "./pages/intro/intro.component";
+import { FaqItemComponent } from "./component/faq-item/faq-item.component";
+import { CountUpDirective } from './directives/count-up.directive';
+import { ServiceComponent } from './pages/service/service.component';
+import { MentorshipComponent } from './pages/mentorship/mentorship.component';
+import { JobfairComponent } from './pages/jobfair/jobfair.component';
+import { StartupComponent } from './pages/startup/startup.component';
+import { PrivilegeComponent } from './pages/privilege/privilege.component';
+import { EnterpriseItemComponent } from './component/enterprise-item/enterprise-item.component';
+import { CountupItemComponent } from './component/countup-item/countup-item.component';
+import { EnterpriseSliderComponent } from './component/enterprise-slider/enterprise-slider.component';
+import { MentorItemComponent } from './component/mentor-item/mentor-item.component';
 
 @NgModule({
   declarations: [
@@ -171,6 +190,24 @@ import { ModalSubmitChallengeSuccessComponent } from "./modal/modal-submit-chall
     ChallengeExamComponent,
     ChallengeComponent,
     ModalSubmitChallengeSuccessComponent,
+    ModalInfoCapacityComponent,
+    QuestionAndAnswerComponent,
+    QACategoryComponent,
+    ContactCompanyComponent,
+    DetailFaqComponent,
+    ModalDownRateComponent,
+    IntroComponent,
+    FaqItemComponent,
+    CountUpDirective,
+    ServiceComponent,
+    MentorshipComponent,
+    JobfairComponent,
+    StartupComponent,
+    PrivilegeComponent,
+    EnterpriseItemComponent,
+    CountupItemComponent,
+    EnterpriseSliderComponent,
+    MentorItemComponent
   ],
   imports: [
     BrowserModule,

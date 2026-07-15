@@ -1,0 +1,28 @@
+/* ===== TEXT CONTENT ===== */
+.content-text p,
+.content-text li {
+  text-align: justify;
+  line-height: 1.6;
+}
+
+/* ===== IMAGE ===== */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== TITLE ===== */
+h3 {
+  font-size: 26px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  h3 {
+    font-size: 22px;
+  }
+
+  .content-text {
+    font-size: 14px;
+  }
+}

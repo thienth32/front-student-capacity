@@ -12,7 +12,11 @@ export class ListTagComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    var numberCheck = Math.ceil(Math.random() * 5);
+    // var numberCheck = Math.ceil(Math.random() * 5);
+
+    const array = new Uint32Array(1);
+    window.crypto.getRandomValues(array);
+    var numberCheck = Math.ceil(array[0] / (Math.pow(2, 32) + 1) * 5);
 
     if (numberCheck % 2 == 0) {
       this.tags = this.tags.reverse();

@@ -1,0 +1,20 @@
+.enterprise-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+  
+.enterprise-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.18);
+}
+
+.enterprise-logo {
+    max-height: 100px;
+    transition: transform 0.3s ease;
+}
+  
+.enterprise-card:hover .enterprise-logo {
+    transform: scale(1.01);
+}

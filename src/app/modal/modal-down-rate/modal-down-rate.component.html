@@ -1,0 +1,30 @@
+<div class="form-upload">
+    <h2 class="fw-bold">Lý do bạn thấy nội dung không hữu ích</h2>
+    <form [formGroup]="downRateForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="mb-3 col">
+          <input type="text" placeholder="Vui lòng nhập ít nhất 10 ký tự" formControlName="content" class="my-input" minlength="10" />
+          <!-- Validate content -->
+          <div class="my-error" *ngIf="content?.invalid && (content?.dirty || content?.touched)">
+            <span *ngIf="content?.errors?.['required']"> Vui lòng nhập thông tin! </span>
+            <span *ngIf="content?.errors?.['minlength']"> Tối thiểu 10 ký tự </span>
+          </div>
+          <!-- End Validate content -->
+        </div>
+      </div>
+      <mat-dialog-actions align="end">
+        <a mat-button (click)="confirmClose()">Huỷ</a>
+        <button
+          class="btn-submit text-white"
+          [ngClass]="downRateForm.invalid ? 'btn-disabled' : ''"
+          [disabled]="downRateForm.invalid"
+          type="submit"
+          mat-button
+          [mat-dialog-close]="true"
+        >
+          Gửi
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </div>
+  

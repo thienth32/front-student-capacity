@@ -1,0 +1,118 @@
+<div class="wraper">
+  <div id="#faq__nav" class="my-2 faq__nav">
+    <div class="container d-flex justify-content-between algin-items-center">
+      <ul class="faq__nav-list">
+        <li
+          *ngFor="let cate of categories"
+          (click)="updateCategoryFaq($event, cate)"
+          [ngClass]="currCate.id == cate.id ? 'active' : ''"
+          class="faq__nav-item"
+        >
+          <a [ngStyle]="{cursor: !statusFaq ? 'auto' : ''}" class="faq__nav-link">{{ cate.name }}</a>
+        </li>
+      </ul>
+      <div class="btn__search-faq">
+        <form
+          class="input-group form-search-faq flex-nowrap"
+          [formGroup]="formFilter"
+          (submit)="searchFaq()"
+        >
+          <input
+            formControlName="filterName"
+            type="text"
+            class="form-control"
+            [attr.disabled]="null"
+            placeholder="Tìm kiếm câu hỏi ..."
+            aria-label="Username"
+            aria-describedby="addon-wrapping"
+          />
+          <button
+            [attr.disabled]="null"
+            class="input-group-text primary-color bg-white border-none"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-3 algin-items-center py-3">
+        <div class="faq__content-aside--inner">
+          <div class="faq__content-aside--header">
+            <div class="">
+              <i class="fa-sharp fa-solid fa-filter"></i>
+              Lọc theo danh mục
+            </div>
+          </div>
+          <div class="faq__content-aside-category" *ngIf="statusCategory">
+            <div *ngFor="let item of currCate.children" class=" ">
+              <div
+                class="faq__content-aside-category--item text-collapse"
+                (click)="getByChildCate($event, item)"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                {{ item.name }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq__content col-9 py-3">
+        <!-- ---Main -->
+        <div *ngIf="statusFaq && faqs.length > 0" class="faq__list ">
+          <div *ngFor="let item of faqs">
+            <app-faq-item class="mb-3" [item]="item"></app-faq-item>
+          </div>
+        </div>
+
+        <div *ngIf="statusFaq">
+          <div *ngIf="faqs.length == 0">
+            <img class="mx-auto d-block mt-5" src="../../../assets/img/no-result.png" alt="No data" />
+            <h1 class="text-center">Không tìm thấy kết quả phù hợp</h1>
+          </div>
+        </div>
+
+        <div *ngIf="!statusFaq">
+          <ngx-skeleton-loader
+            [theme]="{
+              'height.px': '200',
+              'margin-top': '20'
+            }"
+            count="6"
+            animation="line"
+          ></ngx-skeleton-loader>
+        </div>
+
+        <div class="pagination" *ngIf="statusFaq">
+          <ul class="pagination-list">
+            <li
+              class="pagination-list_box pagination-list_first"
+              (click)="paginationPages(first_page_url, false, '1', $event)"
+            >
+              <i class="fa-solid fa-angles-left"></i>
+            </li>
+            <li
+              class="pagination-list_box pagination-item"
+              *ngFor="let page of links"
+              [ngClass]="page.active ? 'active' : ''"
+              (click)="paginationPages(page.url, page.active, page.label, $event)"
+            >
+              {{ page.label }}
+            </li>
+            <li
+              class="pagination-list_box pagination-list_last"
+              (click)="paginationPages(last_page_url, false, last_page, $event)"
+            >
+              <i class="fa-solid fa-angles-right"></i>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

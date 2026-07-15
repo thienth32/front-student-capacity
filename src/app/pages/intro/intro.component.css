@@ -1,0 +1,76 @@
+.section {
+    padding: 20px 0;
+}
+
+.section:last-child {
+    padding-top: -64px;
+    padding-bottom: 20px;
+}
+
+.section-bg--1 {
+    background: var(--my-bg-color); 
+}
+
+.section-bg--2 {
+    background: var(--my-bg-white);
+}
+
+.section-bg--3 {
+    background: var(--my-primary-50);
+}
+
+.recruitment-position-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 24px;
+}
+
+.recruitment-position-item {
+    display: grid;
+    grid-template-columns: 160px 2fr;
+    grid-gap: 16px;
+    padding: 16px;
+    background: var(--my-white);
+    border-radius: var(--my-rounded);
+    border: 1px solid var(--my-dark-gray);
+    transition-duration: .3s;
+}
+
+.recruitment-position__img {
+    border-radius: var(--my-rounded);
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+}
+
+.recruitment-position__context {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.recruitment-position__context-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.recruitment-position__title {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+}
+
+.recruitment-position__context-recruitment {
+    color: var(--my-secondary);
+    display: flex;
+    gap: 4px
+}
+
+.recruitment-position__desc {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

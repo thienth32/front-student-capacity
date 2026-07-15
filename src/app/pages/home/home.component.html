@@ -1,7 +1,51 @@
-<app-banner></app-banner>
-<div class="section section-bg--1">
+<app-banner [page]="page"></app-banner>
+<!-- topCards -->
+<div class="section section-bg--2">
   <div class="container">
-    <h2 class="section__title my-h3">
+    <div *ngIf="topCards" class="row g-3 justify-content-center">
+      <div *ngFor="let card of topCards" class="col-12 col-md-6 col-lg-4">
+        <div class="card card-custom h-100 shadow-sm">
+          <!-- Image -->
+          <div class="card-img-wrapper">
+            <img [src]="card.icon" [alt]="card.name">
+          </div>
+          <!-- Buttons -->
+          <div class="card-body">
+            <div class="row g-3">
+              <div *ngFor="let button of card.data" class="col-6">
+                <a class="contest-view-link w-100 h-100 d-block" 
+                  [href]="button.url" 
+                  target="_blank"
+                >
+                  <button class="my-btn-secondary my-btn-m my-1 w-100 h-100 btn-card">
+                    {{button.label}}
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!topCards" class="row g-3 justify-content-center">
+      <div *ngFor="let i of [1,2,3]" class="col-12 col-md-6 col-lg-4">
+        <ngx-skeleton-loader
+          [theme]="{
+            'height.px': '300',
+            'width': '100%',
+            'margin-bottom': '20'
+          }"
+          appearance="line"
+        ></ngx-skeleton-loader>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Vị trí tuyển dụng gấp -->
+<!-- <div class="section section-bg--2">
+  <div class="container">
+    <h2 class="section__title section__title--center my-h3">
       <i class="section__title-icon fa-solid fa-clock-rotate-left"></i>
       Vị trí tuyển dụng gấp
     </h2>
@@ -90,141 +134,121 @@
           ></li>
         </ul>
       </div>
-    </div>
-  </div>
-</div>
-<div class="section section-bg--2">
-  <div class="container">
-    <h2 class="section__title my-h3">
-      <i class="section__title-icon fa-solid fa-ranking-star"></i>
-      Các cuộc thi
-    </h2>
-    <div *ngIf="contests" class="section-content">
-      <div class="contest-list">
-        <app-contest-item *ngFor="let item of contests" [item]="item"></app-contest-item>
-      </div>
-      <div class="contest-view">
-        <a class="contest-view-link" routerLink="/cuoc-thi">
-          <button class="my-btn-secondary my-btn-m">Xem tất cả <i class="fa-solid fa-arrow-right"></i></button>
+      <div class="contest-view mt-1">
+        <a class="contest-view-link" routerLink="/tin-tuc-tuyen-dung">
+          <button class="my-btn-secondary my-btn-m">Xem thêm<i class="fa-solid fa-arrow-right"></i></button>
         </a>
       </div>
     </div>
-    <div *ngIf="!contests" class="row">
-      <div class="col-lg-6 col-md-12 col-sm-12">
-        <ngx-skeleton-loader
-          [theme]="{
-            'height.px': '150',
-            'margin-bottom': '20'
-          }"
-          animation="pulse"
-        ></ngx-skeleton-loader>
-      </div>
-      <div class="col-lg-6 col-md-12 col-sm-12">
-        <ngx-skeleton-loader
-          [theme]="{
-            'height.px': '150',
-            'margin-bottom': '20'
-          }"
-          animation="pulse"
-        ></ngx-skeleton-loader>
-      </div>
-      <div class="col-lg-6 col-md-12 col-sm-12">
-        <ngx-skeleton-loader
-          [theme]="{
-            'height.px': '150',
-            'margin-bottom': '20'
-          }"
-          animation="pulse"
-        ></ngx-skeleton-loader>
-      </div>
-      <div class="col-lg-6 col-md-12 col-sm-12">
-        <ngx-skeleton-loader
-          [theme]="{
-            'height.px': '150',
-            'margin-bottom': '20'
-          }"
-          animation="pulse"
-        ></ngx-skeleton-loader>
+  </div>
+</div> -->
+
+<!-- dịch vụ việc làm -->
+<div class="section section-bg--1">
+  <div class="container">
+    <h2 class="section__title section__title--center my-h3">
+      <i class="section__title-icon fa-solid fa-briefcase"></i>
+      Dịch vụ việc làm
+    </h2>
+    <div class="section-content">
+      <img class="w-100" src="../../../assets/img/qhdn_hn.png" alt="">
+      <div class="contest-view mt-2">
+        <a class="contest-view-link" routerLink="/dich-vu">
+          <button class="my-btn-secondary my-btn-m">Đăng ký dịch vụ<i class="fa-solid fa-arrow-right"></i></button>
+        </a>
       </div>
     </div>
   </div>
 </div>
 
-<div class="section section-bg--3">
+<!-- Hoạt động -->
+<div class="section section-bg--2">
   <div class="container">
-    <h2 class="section__title section__title--center my-h3">Tính năng vượt trội khác</h2>
-    <div class="section-content outstanding-advantages-section">
-      <div class="advantage-show-container">
-        <div class="advantage-show__header">
-          <ul class="advantage-show__dots">
-            <li class="advantage-show__dots-item"></li>
-            <li class="advantage-show__dots-item advantage-show__dots-yellow"></li>
-            <li class="advantage-show__dots-item advantage-show__dots-green"></li>
-          </ul>
-        </div>
-        <div class="advantage-show__content">
-          <img
-            src="https://media.istockphoto.com/vectors/young-programmer-coding-a-new-project-vector-id513544018?k=20&m=513544018&s=612x612&w=0&h=RGmXN_WJhDvq6Hiui1ypnCggPAokE_dDhFX0bmC6PsA="
-            alt=""
-            class="advantage-show__img fade"
-          />
-          <img
-            src="https://media.istockphoto.com/vectors/programming-code-application-window-vector-id1124838925?k=20&m=1124838925&s=612x612&w=0&h=lKkgavYLrbDtSnQivxMm3_4ThyovkQEFvbOb2Dv3O6g="
-            alt=""
-            class="advantage-show__img d-none fade"
-          />
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhLRc0tR6qEXBCJe9xW1qAZajwJrZzZy4ekXuLN3-5-pD3YucvDmF5OZkePFvQuBtjEF4&usqp=CAU"
-            alt=""
-            class="advantage-show__img d-none fade"
-          />
-          <img
-            src="https://img.freepik.com/premium-vector/person-programmer-working-pc-laptop_165488-2761.jpg?w=2000"
-            alt=""
-            class="advantage-show__img d-none fade"
-          />
-        </div>
-      </div>
-      <div class="advantage-show-text">
-        <div class="advantage-list w-100">
-          <span class="advantage__tag advantage__tag--1">
-            <i class="fa-solid fa-code"></i>
-            Dù bạn có lựa chọn ngôn ngữ hoặc phương pháp học nào, bạn cần bắt đầu từ những điều cơ bản nhất.
-          </span>
-          <span class="advantage__tag advantage__tag--2">
-            <i class="fa-solid fa-code"></i>
-            Chẳng có ngôn ngữ lập trình nào là tốt nhất cả, một khi bạn đã học được một ngôn ngữ, bạn sẽ dễ dàng học
-            thêm một ngôn ngữ khác
-          </span>
-          <span class="advantage__tag advantage__tag--3">
-            <i class="fa-solid fa-code"></i>
-            Con đường bạn đi sẽ phụ thuộc rất nhiều vào lý do vì sao bạn lại muốn học lập trình và bạn có bao nhiêu thời
-            gian để dành cho việc này.
-          </span>
-          <span class="advantage__tag advantage__tag--4">
-            <i class="fa-solid fa-code"></i>
-            Khi bạn vấp phải một vấn đề nào đó hoặc khi bạn cần tham khảo ý kiến ai đó, sách là một lựa chọn phù hợp.
-          </span>
+    <h2 class="section__title section__title--center my-h3">
+      <i class="section__title-icon fa-solid fa-ranking-star"></i>
+      Hoạt động
+    </h2>
+    <div class="section-content">
+      <div class="row g-3">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngFor="let item of activities">
+          <a [routerLink]="item.link" class="activity-card">
+            <div class="activity-thumb">
+              <img src="../../../assets/img/{{item.image}}" [alt]="item.title">
+              <!-- <div class="activity-overlay">
+                <h3 class="activity-title">
+                  {{ item.title }}
+                </h3>
+              </div> -->
+            </div>
+          </a>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class="section section-bg--2">
+
+<!-- Thông số  -->
+<div class="section section-bg--1">
   <div class="container">
-    <h2 class="section__title section__title--center my-h3">Tin tức - sự kiện</h2>
     <div class="section-content">
-      <div class="post-event-list grid gy-1" *ngIf="!listPostEvent">
-        <app-post-load-item
-          class="post-loading"
-          *ngFor="let item of [].constructor(3); let i = index"
-        ></app-post-load-item>
-      </div>
-      <div class="post-event-list">
-        <div class="post-item" *ngFor="let item of listPostEvent">
-          <app-post-related-item [postItem]="item"></app-post-related-item>
+      <app-countup-item [stats]="stats"></app-countup-item>
+    </div>
+  </div>
+</div>
+
+<!-- Ngày hội việc làm  -->
+<div *ngIf="jobFair" class="section section-bg--2">
+  <div class="container">
+    <div class="row algin-items-stretch">
+      <div class="col-md col-sm-12">
+        <div class="bg-light d-flex align-items-center justify-content-center h-100" style="min-height:200px;">
+            <img [src]="jobFair.icon"
+                  class="img-fluid"
+                  [alt]="jobFair.name">
         </div>
       </div>
+
+      <!-- Content -->
+      <div class="col-md col-sm-12 d-flex flex-column">
+        <h2 class="section__title section__title--center my-h3 my-2">
+          <i class="section__title-icon fa-solid fa-calendar"></i>
+          {{jobFair.name}}
+        </h2>
+
+        <div class="post-detail__content-text" [innerHTML]="jobFair.data[0].description"></div>
+
+        <div class="text-end">
+          <a class="contest-view-link" routerLink="/ngay-hoi-viec-lam">
+            <button class="my-btn-secondary my-btn-m">Xem thêm<i class="fa-solid fa-arrow-right"></i></button>
+          </a>
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tin nổi bật -->
+<div class="section section-bg--1">
+  <div class="container">
+    <h2 class="section__title section__title--center my-h3">
+      <i class="section__title-icon fa-solid fa-newspaper"></i>
+      Tin nổi bật
+    </h2>
+    <div class="section-content">
+      <ngx-slick-carousel [config]="slider">
+        <ng-container *ngIf="!listPostEvent">
+          <div ngxSlickItem *ngFor="let item of [].constructor(3); let i = index" class="mx-3">
+            <app-post-load-item
+              class="post-loading"
+            ></app-post-load-item>
+          </div>
+        </ng-container>
+        <ng-container>
+          <div ngxSlickItem *ngFor="let item of listPostEvent" class="mx-3">
+            <app-post-related-item [postItem]="item"></app-post-related-item>
+          </div>
+        </ng-container>
+      </ngx-slick-carousel>
       <div class="contest-view mt-5" *ngIf="listPostEvent">
         <a class="contest-view-link" routerLink="/tin-tuc">
           <button class="my-btn-secondary my-btn-m">Xem tất cả <i class="fa-solid fa-arrow-right"></i></button>
@@ -233,15 +257,25 @@
     </div>
   </div>
 </div>
+
+<!-- Doanh nghiệp -->
 <div class="section section-bg--2">
   <div class="container">
-    <h2 class="section__title section__title--center my-h3">Kết nối với các doanh nghiệp lớn</h2>
+    <h2 class="section__title section__title--center my-h3">
+      <i class="section__title-icon fa-solid fa-building"></i>
+      Doanh nghiệp hợp tác tiêu biểu
+    </h2>
     <div class="section-content">
-      <ngx-slick-carousel [config]="sliderCompany" class="recruitment-list">
-        <div ngxSlickItem class="recruitment-item mx-3" *ngFor="let item of companies">
-          <img class="recruitment-item__img" [src]="item.logo" alt="" />
-        </div>
-      </ngx-slick-carousel>
+      <app-enterprise-slider [enterprises]="companies"></app-enterprise-slider>
     </div>
   </div>
 </div>
+
+<!-- <div class="section section-bg--2">
+  <div class="container">
+    <h2 class="section__title section__title--center my-h3">Liên hệ</h2>
+    <div class="section-content" id="contactForm">
+      <app-contact-company></app-contact-company>
+    </div>
+  </div>
+</div> -->

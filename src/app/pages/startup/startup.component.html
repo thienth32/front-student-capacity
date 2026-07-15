@@ -1,0 +1,163 @@
+<app-banner [page]="page"></app-banner>
+<div class="wraper">
+    <!-- title -->
+    <div class="section section-bg--1 my-2">
+        <div class="container text-center">
+            <h3 class="section__title section__title--center my-h3">Vườn ươm khởi nghiệp</h3>
+            <p class="text-muted"> Vườn ươm khởi nghiệp dành cho sinh viên Trường Cao đẳng FPT Polytechnic là môi trường hỗ trợ toàn diện nhằm thúc đẩy tinh thần sáng tạo và phát triển ý tưởng kinh doanh của sinh viên. <br>
+                Tại đây, sinh viên được định hướng từ giai đoạn hình thành ý tưởng, xây dựng mô hình kinh doanh đến triển khai thực tế thông qua sự đồng hành của giảng viên, chuyên gia và doanh nghiệp. <br>
+                Vườn ươm cung cấp các hoạt động như tư vấn, đào tạo kỹ năng khởi nghiệp, kết nối nguồn lực và cơ hội đầu tư, giúp sinh viên từng bước hiện thực hóa dự án của mình và sẵn sàng tham gia vào thị trường lao động hoặc tự tạo việc làm sau khi tốt nghiệp. </p>
+        </div>
+    </div>
+
+    <!-- tầm nhìn -->
+    <div class="section section-bg--2 my-2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-xs-12">
+                    <h3 class="section__title section__title--center my-h3">Mục tiêu</h3>
+                    <p class="text-muted"> Hỗ trợ sinh viên phát triển ý tưởng khởi nghiệp từ cơ bản đến thực tiễn. <br>
+                        Trang bị kiến thức, kỹ năng và tư duy kinh doanh hiện đại. <br>
+                        Kết nối sinh viên với doanh nghiệp, nhà đầu tư và hệ sinh thái khởi nghiệp. <br>
+                        Tạo điều kiện để sinh viên triển khai dự án thật và tạo ra giá trị thực tế. <br>
+                        Góp phần hình thành thế hệ sinh viên chủ động, sáng tạo và tự tạo việc làm. </p>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <img src="../../../assets/img/vuon_uom_muc_tieu.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- sứ mệnh -->
+    <div class="section section-bg--2 my-2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-xs-12">
+                    <img src="../../../assets/img/vuon_uom_gia_tri_cot_loi.jpg" alt="">
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <h3 class="section__title section__title--center my-h3">Giá trị cốt lõi</h3>
+                    <p class="text-muted">  Sáng tạo: Khuyến khích ý tưởng mới, tư duy đột phá. <br>
+                        Thực tiễn: Gắn học với làm, dự án triển khai thực tế. <br>
+                        Kết nối: Liên kết chặt chẽ giữa sinh viên – nhà trường – doanh nghiệp. <br>
+                        Đồng hành: Hỗ trợ xuyên suốt từ ý tưởng đến vận hành. <br>
+                        Phát triển bền vững: Hướng tới các mô hình kinh doanh lâu dài, có giá trị xã hội. </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- mentor -->
+    <div class="section section-bg--1">
+        <div class="container">
+            <h3 class="section__title section__title--center my-h3">Mentor</h3>
+            <ngx-slick-carousel [config]="slider" class="recruitment-list">
+                <!-- loading -->
+                <ng-container *ngIf="mentorLoading || mentors.length == 0">
+                    <div ngxSlickItem class="recruitment-item mx-3"
+                        *ngFor="let item of [].constructor(5)"
+                    >
+                        <div class="logo-wrapper">
+                            <ngx-skeleton-loader
+                                appearance="line"
+                                [theme]="{
+                                    width: '120px',
+                                    height: '60px',
+                                    margin: 'auto'
+                                }">
+                            </ngx-skeleton-loader>
+                        </div>
+            
+                        <ngx-skeleton-loader
+                            appearance="line"
+                            [theme]="{
+                                width: '100%',
+                                height: '16px',
+                                'margin-top': '10px'
+                        }">
+                        </ngx-skeleton-loader>
+                    </div>
+                </ng-container>
+                    
+                <!-- data -->
+                <ng-container *ngIf="mentors.length > 0">
+                    <div ngxSlickItem class="mx-3"
+                        *ngFor="let mentor of mentors"
+                    >
+                        <app-mentor-item [mentor]="mentor"></app-mentor-item>
+                    </div>
+                </ng-container>
+            </ngx-slick-carousel>
+        </div>
+    </div>
+
+    <!-- dự án nổi bật -->
+    <div class="section section-bg--2 my-2">
+        <div class="container">
+            <h3 class="section__title section__title--center my-h3">Các dự án nổi bật</h3>
+            <ngx-slick-carousel [config]="slider" class="recruitment-list">
+                <ng-container *ngIf="projectLoading || projects.length == 0">
+                    <div ngxSlickItem *ngFor="let item of [].constructor(3)" class="mx-3">
+                        <div class="logo-wrapper">
+                            <ngx-skeleton-loader
+                                appearance="line"
+                                [theme]="{
+                                    width: '450px',
+                                    height: '300px',
+                                    margin: 'auto'
+                                }">
+                            </ngx-skeleton-loader>
+                        </div>
+                    </div> 
+                </ng-container>
+                
+                <ng-container *ngIf="projects.length > 0">
+                    <div ngxSlickItem *ngFor="let project of projects" class="mx-3">
+                        <div class="mentor-card" (click)="openModal(project)" >
+                            <div class="mentor-img">
+                                <img [src]="project?.thumbnail" alt="project">
+                            </div>
+                            <div class="mentor-content">
+                                <h2>{{project?.name}}</h2>
+                                <p>Thực hiện bởi: {{project?.contact_name}}</p>
+                                <div>Lĩnh vực: 
+                                    <span class="tag" *ngFor="let topic of project?.topics"> {{topic?.name}} </span>
+                                </div>
+                                <div *ngIf="project?.enterprises.length > 0">Số doanh nghiệp đồng hành: {{project?.enterprises.length}} doanh nghiệp</div>
+                                <a type="button" (click)="openModal(project)" class="my-btn my-btn-primary my-btn-xs">Chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ngx-slick-carousel>
+        </div>
+
+        <!-- modal -->
+        <div class="modal-overlay" *ngIf="selectedProject" (click)="closeModal()">
+            <div class="modal-box" (click)="$event.stopPropagation()">
+                <div class="modal-header">
+                    <h2>{{ selectedProject?.name }} - thực hiện bởi <b>{{selectedProject?.contact_name}}</b></h2>
+                    <span class="close-btn" (click)="closeModal()">✕</span>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <img class="col-12 col-md-6" [src]="selectedProject.thumbnail" alt="">
+                        <div class="col-12 col-md-6">
+                            <div>Lĩnh vực: 
+                                <span class="tag mx-2 mb-2" *ngFor="let topic of selectedProject?.topics"> {{topic.name}} </span>
+                            </div>
+                            <div class="my-2">Doanh nghiệp đồng hành: 
+                                <span class="tag mx-2 mb-2" *ngFor="let enterprise of selectedProject?.enterprises"> {{enterprise.name}} </span>
+                            </div>
+                            <div class="my-2">Mentor hỗ trợ: 
+                                <span class="tag mx-2 mb-2" *ngFor="let mentor of selectedProject?.mentors"> {{mentor.name}} </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-detail__content-text my-2" [innerHTML]="selectedProject?.description"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

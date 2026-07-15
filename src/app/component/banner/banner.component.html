@@ -1,7 +1,9 @@
 <ngb-carousel *ngIf="bannerStatus">
     <ng-template ngbSlide *ngFor="let b of banner">
         <div class="picsum-img-wrapper banner-img-box">
-            <img [src]="b.image_url" class="w-100" alt="Random first slide">
+            <a [href]="b.link_to" target="_blank">
+                <img [src]="b.image_url" class="w-100" alt="Random first slide">
+            </a>
         </div>
     </ng-template>
 </ngb-carousel>

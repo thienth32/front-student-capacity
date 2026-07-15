@@ -165,11 +165,11 @@
             </a>
           </h3>
           <div class="post-hot-item-content__info">
-            <div class="post-hot-item-content__info-item">
+            <!-- <div class="post-hot-item-content__info-item">
               <i class="fa-solid fa-user"></i>&ensp; {{ item.user.name }}
-            </div>
+            </div> -->
             <div class="post-hot-item-content__info-item">
-              <i class="fa-solid fa-clock"></i>&ensp; {{ item.published_at | formatDatePost }}
+              <i class="fa-solid fa-clock"></i>&ensp; {{ (item?.deadline ? item.deadline : item.published_at) | formatDatePost }}
             </div>
           </div>
         </div>

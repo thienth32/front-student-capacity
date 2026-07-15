@@ -1,36 +1,6 @@
 <!-- <app-loading-page [status]="statusPage">
 </app-loading-page> -->
-<div class="container-fuild recruitment-banner-box">
-  <ngb-carousel>
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
-        <img
-          class="w-100"
-          src="https://fptjobs.com/Media/Images/BannerImages/3142022120000AM10231180banner%20web%20phu.png"
-          alt="Random first slide"
-        />
-      </div>
-    </ng-template>
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
-        <img
-          class="w-100"
-          src="https://fptjobs.com/Media/Images/BannerImages/9162021120000AM143756994web-phu.png"
-          alt="Random second slide"
-        />
-      </div>
-    </ng-template>
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
-        <img
-          class="w-100"
-          src="https://fptjobs.com/Media/Images/BannerImages/1122021120000AM10491896bn-web-phufull.png"
-          alt="Random third slide"
-        />
-      </div>
-    </ng-template>
-  </ngb-carousel>
-</div>
+<app-banner [page]="namePage"></app-banner>
 <div class="recruitment-content">
   <div class="container py-4">
     <form

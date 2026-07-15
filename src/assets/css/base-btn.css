@@ -137,7 +137,7 @@
   background-color: var(--my-disabled);
   color: var(--my-text-disabled);
   border-radius: var(--my-rounded);
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;

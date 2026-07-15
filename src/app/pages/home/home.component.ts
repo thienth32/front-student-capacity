@@ -11,6 +11,7 @@ import { Post } from "src/app/models/post.model";
 import { ListPostService } from "src/app/services/list-post.service";
 import { ResponsePayload } from "src/app/models/response-payload";
 import { Title } from "@angular/platform-browser";
+import { SliderService } from "src/app/services/slider.service";
 
 @Component({
   selector: "app-home",
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
   listRecruitmentPosition: Post[] | null;
   advanIndex: number = 0;
 
+  page: string = 'home';
   majors: Array<Major>;
   statusResultMajor: boolean = false;
   users: Array<User>;
@@ -39,6 +41,44 @@ export class HomeComponent implements OnInit {
   currentIndex: number = 1;
   statusListPostRecruitment: boolean = false;
 
+  //thiết lập trang chủ
+  stats: Array<any>;
+  jobFair: any;
+  topCards: Array<any>
+
+  activities = [
+    {
+      title: 'Tin tức',
+      image: 'tin-tuc.jpg',
+      link: '/tin-tuc'
+    },
+    {
+      title: 'Mentorship',
+      image: 'mentorship.jpg',
+      link: '/chuong-trinh-mentor'
+    },
+    {
+      title: 'Dịch vụ việc làm',
+      image: 'dich-vu-viec-lam.jpg',
+      link: '/dich-vu'
+    },
+    {
+      title: 'Ngày hội việc làm',
+      image: 'ngay-hoi-viec-lam.jpg',
+      link: '/ngay-hoi-viec-lam'
+    },
+    {
+      title: 'Vườn ươm khởi nghiệp',
+      image: 'vuon-uom-khoi-nghiep.jpg',
+      link: '/vuon-uom-khoi-nghiep'
+    },
+    {
+      title: 'Đặc quyền sinh viên',
+      image: 'dac-quyen-sinh-vien.jpg',
+      link: '/dac-quyen-sinh-vien'
+    }
+  ];
+
   sliderRecruitmentPosition = {
     slidesToShow: 1,
     dots: true,
@@ -48,18 +88,19 @@ export class HomeComponent implements OnInit {
     fadeSpeed: 1000,
   };
 
-  sliderCompany = {
-    slidesToShow: 5,
+  slider = {
+    slidesToShow: 3,
     infinite: true,
     autoplay: true,
-    arrows: true,
+    arrows: false,
     slidesToScroll: 1,
-    fadeSpeed: 1000,
+    speed: 1000,
+    autoplaySpeed: 3000,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 1,
           slidesToScroll: 1,
           infinite: true,
         },
@@ -67,7 +108,7 @@ export class HomeComponent implements OnInit {
       {
         breakpoint: 749,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
@@ -90,6 +131,7 @@ export class HomeComponent implements OnInit {
     private companyService: CompanyService,
     private postService: ListPostService,
     private titleService: Title,
+    private sliderService: SliderService,
   ) {}
 
   ngOnInit(): void {
@@ -104,7 +146,16 @@ export class HomeComponent implements OnInit {
     });
     this.getListPost();
     this.getAllCompany();
+    this.getStats();
+    
     // Slider tính năng
+    
+    if(window.location.href.includes("#contactForm")) {
+      setTimeout(() => {
+        const contactForm = document.querySelector("#contactForm");
+        contactForm?.scrollIntoView(false);
+      }, 1000);
+    }
 
     const advantageFrist = document.querySelector(".advantage__tag--1");
     const advantageImage = document.querySelector(".advantage-show__img");
@@ -173,6 +224,17 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  //lấy các thiết lập hiển thị trên trang chủ
+  getStats() {
+    this.sliderService.getListStat().subscribe((res) => {
+      if (res.status) {
+        this.stats = res.payload.filter((item: any) => item.type == 1);
+        this.topCards = res.payload.filter((item: any) => item.type == 2);
+        this.jobFair = res.payload.find((item: any) => item.type == 3);
+      }
+    })
+  }
+
   // Control next
   nextRecruitmentPosition() {
     this.statusListPostRecruitment = false;
@@ -207,6 +269,8 @@ export class HomeComponent implements OnInit {
   setDataRecruitmentPosition(res: ResponsePayload) {
     if (res.status) {
       this.listRecruitmentPosition = res.payload.data;
+      // console.log(this.listRecruitmentPosition);
+      
       this.arrLinkPost = res.payload.links;
       this.arrLinkPost.pop();
       this.arrLinkPost.shift();
@@ -231,14 +295,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  //-----------------------  Danh sách các 3 bài viết
+  //-----------------------  Danh sách các 3 bài viết tin tức-sự kiện
   getListPost() {
-    this.postService.getPostByCategory("post-contest", "1").subscribe((res) => {
+    this.postService.getPostByCategory("post-event", "1").subscribe((res) => {
       if (res.status == true) {
-        let arrResult = res.payload.data;
-        this.listPostEvent = arrResult.filter((res: Post, index: number) => {
-          return index < 3;
-        });
+        this.listPostEvent = res.payload.data;
       }
     });
   }

@@ -1,0 +1,71 @@
+<!-- <div class="mentor-card">
+    <img class="mentor-avatar" [src]="mentor?.avatar">
+    <div class="mentor-info">
+        <h3 class="mentor-name">{{ mentor?.name }}</h3>
+        <div class="mentor-class">{{ mentor?.email }}</div>
+        <div class="mentor-role">Mentor</div>
+        <div *ngIf="mentor?.info?.education" class="mentor-class">Học vấn: <b>{{ mentor?.info?.education }}</b></div>
+        <div *ngIf="mentor?.info?.experience" class="mentor-class">Kinh nghiệm: <b>{{ mentor?.info?.experience }}</b></div>
+        <div *ngIf="mentor?.info?.position" class="mentor-class">Vị trí công tác: <b>{{ mentor?.info?.position }}</b></div>
+        <div *ngIf="mentor?.info?.location_name" class="mentor-class">Khu vực: 
+        <span class="location-tag">{{ mentor?.info?.location_name }}</span>
+        </div>
+    </div>
+    <div class="mentor-icon">
+        ↗
+    </div>
+</div> -->
+
+<div class="mentor-card">
+  <!-- ICON -->
+  <div class="mentor-icon">
+    ↗
+  </div>
+  <div class="row g-3 align-items-center">
+    <!-- AVATAR -->
+    <div class="col-12 col-md-3 text-center">
+      <div class="mentor-avatar-wrapper">
+        <img
+          class="mentor-avatar"
+          [src]="mentor?.avatar"
+          alt="avatar"
+        />
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="col-12 col-md-9">
+      <div class="mentor-info">
+        <h3 class="mentor-name">
+          {{ mentor?.name }}
+        </h3>
+        <div class="mentor-email">
+          {{ mentor?.email }}
+        </div>
+        <div class="mentor-role">
+          Mentor
+        </div>
+        <!-- meta -->
+        <div class="mentor-meta">
+          <div *ngIf="mentor?.info?.education">
+            Học vấn: {{ mentor?.info?.education }}
+          </div>
+          <div *ngIf="mentor?.info?.experience">
+            Kinh nghiệm: {{ mentor?.info?.experience }}
+          </div>
+          <div *ngIf="mentor?.info?.position">
+            Vị trí công tác: {{ mentor?.info?.position }}
+          </div>
+        </div>
+
+        <!-- location -->
+        <div *ngIf="mentor?.info?.location_name" class="mt-2">
+            Khu vực: 
+            <span class="location-tag">
+                {{ mentor?.info?.location_name }}
+            </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div>
+    <ngx-slick-carousel [config]="sliderCompany" class="recruitment-list">
+        <!-- loading -->
+        <ng-container *ngIf="!enterprises">
+            <div ngxSlickItem class="recruitment-item mx-3"
+                 *ngFor="let item of [].constructor(5)">
+                
+                <div class="logo-wrapper">
+                    <ngx-skeleton-loader
+                      appearance="line"
+                      [theme]="{
+                        width: '120px',
+                        height: '60px',
+                        margin: 'auto'
+                      }">
+                    </ngx-skeleton-loader>
+                </div>
+    
+                <ngx-skeleton-loader
+                  appearance="line"
+                  [theme]="{
+                    width: '100%',
+                    height: '16px',
+                    'margin-top': '10px'
+                  }">
+                </ngx-skeleton-loader>
+            </div>
+        </ng-container>
+            
+        <!-- data -->
+        <ng-container *ngIf="enterprises">
+            <div ngxSlickItem class="recruitment-item mx-3"
+                 *ngFor="let item of enterprises"
+            >
+              <div class="logo-wrapper">
+                <img class="recruitment-item__img"
+                  [src]="item.event_id ? item.company.logo : item.logo"
+                  [alt]="item.event_id ? item.company.name : item.name" />
+              </div>
+              <p class="company-name">{{ item.event_id ? item.company.name : item.name }}</p>
+            </div>
+        </ng-container>
+    </ngx-slick-carousel>
+</div>

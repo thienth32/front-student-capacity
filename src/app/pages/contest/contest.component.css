@@ -135,6 +135,22 @@ h5 {
   color: var(--white);
 }
 
+.contest__content-aside-type--item {
+  height: 40px;
+  line-height: 40px;
+  background-color: var(--gray-200);
+  margin-bottom: 10px;
+  border-radius: 4px;
+  color: var(--gray-600);
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.contest__content-aside-type .active {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
 .contest__content-aside-major {
   overflow-y: auto;
   max-height: 400px;

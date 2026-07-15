@@ -52,12 +52,14 @@ export class ContestService {
   }
 
   // Bộ lọc cuộc thi
-  filterContest(keyword: string = "", major_id: number, status: number = 1): Observable<ResponsePayload> {
+  filterContest(keyword: string = "", major_id: number, status: number = 1, type: number): Observable<ResponsePayload> {
     let majorValue;
     let statusValue;
+    let contestType;
     majorValue = major_id == undefined ? "" : major_id;
+    contestType = type == undefined ? "" : type;
     statusValue = status == 0 ? 1 : status;
-    const params = new HttpParams().set("q", keyword).set("status", statusValue).set("major_id", majorValue);
+    const params = new HttpParams().set("q", keyword).set("status", statusValue).set("major_id", majorValue).set('type', contestType);
     return this.http.get<ResponsePayload>(`${environment.contestListUrl}?${params}`);
   }
 

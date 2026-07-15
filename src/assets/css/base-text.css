@@ -42,3 +42,36 @@
   width: 100%;
   text-overflow: ellipsis;
 }
+
+.section{
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.section-bg--1 {
+  background: var(--my-bg-color);
+}
+
+.section-bg--2 {
+  background: var(--my-bg-white);
+}
+
+.section-bg--3 {
+  background: var(--my-primary-50);
+}
+
+.section__title {
+  color: var(--my-secondary);
+  margin-bottom: 32px;
+}
+
+.section__title--center {
+  text-align: center;
+}
+
+.section__title-icon {
+  color: var(--my-primary);
+  background: -webkit-linear-gradient(rgb(232, 84, 84), rgb(255, 195, 195), #ff6638);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

@@ -1,0 +1,127 @@
+<app-banner [page]="page"></app-banner>
+
+<div class="container my-4">
+  <!-- ===== INFO ===== -->
+  <div class="section section-bg--2">
+    <!-- loading -->
+    <ng-container *ngIf="isLoading || !jobfair">
+      <div class="col-12">
+        <ngx-skeleton-loader
+          appearance="line"
+          [theme]="{ height: '250px' }">
+        </ngx-skeleton-loader>
+      </div>
+    </ng-container>
+
+    <!-- text -->
+    <div *ngIf="!isLoading && jobfair"  class="row align-items-center g-4 mb-5">
+      <div class="col-12 col-md-6">
+        <h3 class="text-center fw-bold mb-3">{{ jobfair?.name }}</h3>
+        <div
+          class="content-text mb-3"
+          [innerHTML]="jobfair?.description"
+        ></div>
+
+        <button class="btn my-btn-secondary my-btn-sm align-items-center" (click)="openUrl()">
+          Đăng ký ngay
+        </button>
+      </div>
+
+      <!-- image -->
+      <div class="col-12 col-md-6 text-center">
+        <img
+          class="img-fluid rounded"
+          [src]="jobfair?.thumbnail"
+          [alt]="jobfair?.name"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DOANH NGHIỆP ===== -->
+  <div class="section section-bg--1 text-center mb-5">
+    <h3 class="fw-bold mb-4">Doanh nghiệp đồng hành</h3>
+    <app-enterprise-slider [enterprises]="sponsors"></app-enterprise-slider>
+  </div>
+
+  <!-- ===== THƯ NGỎ ===== -->
+  <div class="section section-bg--2 row align-items-center g-4 mb-5">
+    <div class="col-12 col-md-6">
+      <h3 class="fw-bold mb-3 text-center">Thư ngỏ</h3>
+      <div class="content-text" [innerHTML]="jobfair?.note"></div>
+    </div>
+
+    <div class="col-12 col-md-6 text-center">
+      <img
+        class="img-fluid rounded"
+        src="../../../assets/img/thu_ngo.png"
+        alt="Thư ngỏ"
+      />
+    </div>
+  </div>
+
+  <!-- ===== TIMELINE ===== -->
+  <div class="section section-bg--2 text-center mb-5">
+    <h3 class="fw-bold mb-3">Timeline</h3>
+    <img
+      class="img-fluid rounded"
+      [src]="jobfair?.timeline"
+      [alt]="jobfair?.name"
+    />
+  </div>
+
+  <!-- ===== NEWS ===== -->
+  <div class="section section-bg--1 text-center mb-5">
+    <h3 class="fw-bold mb-4">Tin tức</h3>
+    <ngx-slick-carousel [config]="slider">
+      <ng-container *ngIf="!posts">
+        <div ngxSlickItem *ngFor="let item of [].constructor(3)" class="px-2">
+          <app-post-load-item></app-post-load-item>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="posts">
+        <div ngxSlickItem *ngFor="let item of posts" class="px-2">
+          <app-post-related-item [postItem]="item"></app-post-related-item>
+        </div>
+      </ng-container>
+    </ngx-slick-carousel>
+  </div>
+
+  <!-- ===== STATS ===== -->
+  <div class="section section-bg--2 text-center mb-5">
+    <app-countup-item [stats]="stats"></app-countup-item>
+  </div>
+
+  <!-- ===== ORGANIZATION ===== -->
+  <div class="section section-bg--1 text-center mb-5">
+    <h3 class="fw-bold mb-4">Đơn vị tổ chức</h3>
+    <div class="row g-3 justify-content-center mb-4">
+      <div class="col-4 col-md-3 col-lg-2" *ngFor="let item of host">
+        <app-enterprise-item [enterprise]="item.company"></app-enterprise-item>
+      </div>
+    </div>
+
+    <h3 class="fw-bold mb-4">Đơn vị tài trợ</h3>
+    <div class="row g-3 justify-content-center mb-4">
+      <div class="col-4 col-md-3 col-lg-2" *ngFor="let item of sponsors">
+        <app-enterprise-item [enterprise]="item.company"></app-enterprise-item>
+      </div>
+    </div>
+
+    <h3 class="fw-bold mb-4">Đơn vị tham gia</h3>
+    <div class="row g-3 justify-content-center">
+      <div class="col-4 col-md-3 col-lg-2" *ngFor="let item of participants">
+        <app-enterprise-item [enterprise]="item.company"></app-enterprise-item>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FAQ ===== -->
+  <div class="section section-bg--2 text-center mb-5">
+    <h3 class="fw-bold mb-3">Câu hỏi thường gặp</h3>
+    <button class="btn my-btn-secondary my-btn-sm" routerLink="/hoi-dap">
+      Xem ngay
+    </button>
+  </div>
+</div>

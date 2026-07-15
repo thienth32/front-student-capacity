@@ -28,6 +28,7 @@ import { Location } from "@angular/common";
   styleUrls: ["./recruitment.component.css"],
 })
 export class RecruitmentComponent implements OnInit {
+  namePage: string = 'recruitment';
   companys: Array<Enterprise>;
   recruitments: Array<Recruitments> = [];
   recruitmentsHot: Array<Recruitments> = [];

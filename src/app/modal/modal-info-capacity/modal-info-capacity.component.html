@@ -1,0 +1,43 @@
+<div class="form-upload">
+  <h2 class="fw-bold">Nhập thông tin của bạn để bắt đầu bài đánh giá năng lực:</h2>
+  <form [formGroup]="formRegisterUser" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="mb-3 col">
+        <label for="exampleInputEmail1" class="form-label">Email <span class="input-required">*</span></label>
+        <input formControlName="email" type="email" placeholder="Vd: anhnv@gmail.com" class="my-input" />
+        <!-- Validate Email -->
+        <div class="my-error" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+          <span *ngIf="email?.errors?.['required']"> Vui lòng nhập thông tin! </span>
+          <span *ngIf="email?.errors?.['email']"> viết đúng định dạng email. </span>
+        </div>
+        <!-- End Validate Email -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="mb-3 col">
+        <label class="form-label">Tên của bạn <span class="input-required">*</span></label>
+        <input type="text" placeholder="Vd: Nguyễn Văn Anh" formControlName="name" class="my-input" minlength="2" />
+        <!-- Validate Name -->
+        <div class="my-error" *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+          <span *ngIf="name?.errors?.['required']"> Vui lòng nhập thông tin! </span>
+          <span *ngIf="name?.errors?.['minlength']"> Tối thiểu 2 ký tự </span>
+        </div>
+        <!-- End Validate Name -->
+      </div>
+    </div>
+    <mat-dialog-actions align="end">
+      <a mat-button (click)="confirmClose()">Huỷ</a>
+      <button
+        class="btn-submit text-white"
+        [ngClass]="formRegisterUser.invalid ? 'btn-disabled' : ''"
+        [disabled]="formRegisterUser.invalid"
+        type="submit"
+        mat-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+      >
+        Gửi
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

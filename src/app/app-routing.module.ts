@@ -28,6 +28,14 @@ import { RankCapacityComponent } from "./pages/rank-capacity/rank-capacity.compo
 import { RankContestComponent } from "./pages/rank-contest/rank-contest.component";
 import { ChallengeComponent } from "./pages/challenge/challenge.component";
 import { ChallengeExamComponent } from "./pages/challenge-exam/challenge-exam.component";
+import { QuestionAndAnswerComponent } from "./pages/question-and-answer/question-and-answer.component";
+import { DetailFaqComponent } from "./pages/detail-faq/detail-faq.component";
+import { IntroComponent } from "./pages/intro/intro.component";
+import { ServiceComponent } from "./pages/service/service.component";
+import { MentorshipComponent } from "./pages/mentorship/mentorship.component";
+import { JobfairComponent } from "./pages/jobfair/jobfair.component";
+import { StartupComponent } from "./pages/startup/startup.component";
+import { PrivilegeComponent } from "./pages/privilege/privilege.component";
 
 const routes: Routes = [
   {
@@ -47,6 +55,16 @@ const routes: Routes = [
         path: "tin-tuc",
         data: { title: "Bài viết" },
         component: PostsComponent,
+      },
+      {
+        path: "hoi-dap",
+        data: { title: "Hỏi đáp" },
+        component: QuestionAndAnswerComponent
+      },
+      {
+        path: "hoi-dap/:id",
+        data: { title: "Hỏi đáp" },
+        component: DetailFaqComponent
       },
       {
         path: "xep-hang-cuoc-thi",
@@ -152,6 +170,30 @@ const routes: Routes = [
         path: "challenge/:id",
         component: ChallengeExamComponent,
       },
+      {
+        path: "gioi-thieu",
+        component: IntroComponent,
+      },
+      {
+        path: "dich-vu",
+        component: ServiceComponent,
+      },
+      {
+        path: "chuong-trinh-mentor",
+        component: MentorshipComponent,
+      },
+      {
+        path: "ngay-hoi-viec-lam",
+        component: JobfairComponent,
+      },
+      {
+        path: "vuon-uom-khoi-nghiep",
+        component: StartupComponent,
+      },
+      {
+        path: "dac-quyen-sinh-vien",
+        component: PrivilegeComponent,
+      },
     ],
   },
   {
@@ -164,4 +206,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

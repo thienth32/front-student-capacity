@@ -61,6 +61,35 @@
           <div class="contest__content-aside--header">
             <div class="">
               <i class="fa-sharp fa-solid fa-filter"></i>
+              Lọc theo loại
+            </div>
+            <div class="btn-major-back" (click)="resetType()" placement="top" ngbTooltip="Reset">
+              <i class="fa-solid fa-rotate-left"></i>
+            </div>
+          </div>
+          <div class="contest__content-aside-type">
+            <div>
+              <div
+                class="contest__content-aside-type--item text-collapse"
+                (click)="getByType($event,0)"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                Cuộc thi
+              </div>
+              <div
+                class="contest__content-aside-type--item text-collapse"
+                (click)="getByType($event,1)"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                Đánh giá năng lực
+              </div>
+            </div>
+          </div>
+          <div class="contest__content-aside--header">
+            <div class="">
+              <i class="fa-sharp fa-solid fa-filter"></i>
               Lọc chuyên ngành
             </div>
             <div class="btn-major-back" (click)="resetMajor()" placement="top" ngbTooltip="Reset">

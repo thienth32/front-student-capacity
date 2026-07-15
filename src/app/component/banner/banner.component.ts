@@ -7,6 +7,7 @@ import { SliderService } from 'src/app/services/slider.service';
   styleUrls: ['./banner.component.css'],
 })
 export class BannerComponent implements OnInit {
+  @Input() page: string;
   banner: Array<Slider> = [];
   bannerStatus: boolean = false;
 
@@ -14,7 +15,7 @@ export class BannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sliderService.getListSlider('home','', '').subscribe(res => {
+    this.sliderService.getListSlider(this.page,'', '').subscribe(res => {
       if (res.status) {
         this.banner = res.payload;
         this.banner ? this.bannerStatus = true : this.bannerStatus;

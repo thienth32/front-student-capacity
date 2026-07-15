@@ -96,7 +96,7 @@
       <div class="row">
         <div class="col col-12 col-md-3">
           <div class="sidebar">
-            <h2 class="sidebar__title">{{ examData.name }}</h2>
+            <h2 class="sidebar__title">Thông tin bài thi</h2>
 
             <ul class="sidebar__list m-0 p-0">
               <li class="sidebar__list-item d-flex align-items-center">
@@ -276,10 +276,11 @@
 
     <!-- kết quả bài làm-->
     <div class="capacity__exam-result text-center" *ngIf="statusTakingExam === 2">
-      <h2>Kết quả bài làm</h2>
-      <span class="text-uppercase text-red capacity__exam-result-point"
+      <!-- <h2>Kết quả bài làm</h2> -->
+      <h2>Kết thúc bài làm</h2>
+      <!-- <span class="text-uppercase text-red capacity__exam-result-point"
         >{{ resultExam.score }}/{{ resultExam.maxPointExam }}</span
-      >
+      > -->
 
       <table class="capacity__exam-result-table mx-auto mt-3">
         <tbody>
@@ -296,7 +297,7 @@
             <td class="pb-1 fw-bold">{{ resultExam.submitAt }}</td>
           </tr>
 
-          <tr>
+          <!-- <tr>
             <td class="pb-1">Số câu đúng</td>
             <td class="pb-1 fw-bold">{{ resultExam.trueAnswer }}</td>
           </tr>
@@ -309,18 +310,18 @@
           <tr>
             <td class="pb-1">Chưa làm</td>
             <td class="pb-1 fw-bold">{{ resultExam.donotAnswer }}</td>
-          </tr>
+          </tr> -->
 
           <tr>
-            <td class="pb-1">
+            <!-- <td class="pb-1">
               <button
                 (click)="handleOpenHistoryExam()"
                 class="capacity__exam-result-actions-item my-btn-primary my-btn-s my-btn--no-bg my-1"
               >
                 Lịch sử làm bài
               </button>
-            </td>
-            <td class="pb-1">
+            </td> -->
+            <td colspan="2">
               <li
                 (click)="handleGoToNextRound(getNextRound().round_id)"
                 class="capacity__exam-result-actions-item my-btn my-btn-primary my-btn-s d-flex align-items-center ml-8 my-1"
@@ -333,7 +334,8 @@
               </li>
 
               <div class="capacity__exam-result-actions-item my-1 ml-8" *ngIf="!getNextRound().status">
-                <a routerLink="/danh-gia-nang-luc" class="my-btn-primary my-btn-s w-100">Bảng xếp hạng</a>
+                <!-- <a routerLink="/danh-gia-nang-luc" class="my-btn-primary my-btn-s w-100">Bảng xếp hạng</a> -->
+                <a routerLink="/danh-gia-nang-luc" class="my-btn-primary my-btn-s w-100">Thoát</a>
               </div>
             </td>
           </tr>

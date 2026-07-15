@@ -48,6 +48,16 @@ export class UserService {
     );
   }
 
+  loginLocal(data: any) {
+
+    // localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("avatar", JSON.stringify("https://cdn-icons-png.flaticon.com/512/149/149071.png"));
+    localStorage.setItem("auth_token", data.token);
+    localStorage.setItem("token_type", JSON.stringify(data.token_type));
+    // this.userSubject.next(data.user);
+    this.jwtToken.next(data.token);
+  }
+
   // Update localStorageHasEdit
   setLocalStorageHasEdit(user: User) {
     localStorage.setItem("user", JSON.stringify(user));
@@ -117,5 +127,9 @@ export class UserService {
     statusValue = status == 0 ? 1 : status;
     const params = new HttpParams().set("q", keyword).set("status", statusValue).set("major_id", majorValue);
     return this.http.get<ResponsePayload>(`${environment.userListUrl}/contest-joined-and-not-joined?${params}`);
+  }
+
+  registerCapacity(data: any): Observable<ResponsePayload> {
+    return this.http.post<ResponsePayload>(`${environment.userUrl}/register-capacity`, data);
   }
 }

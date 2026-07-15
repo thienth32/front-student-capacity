@@ -1,0 +1,26 @@
+/* ------------------- connect recruitment ----------- */
+.recruitment-item {
+    width: 150px;
+    text-align: center;
+}
+  
+/* khung cố định cho logo */
+.logo-wrapper {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* logo */
+.recruitment-item__img {
+    max-width: 150px;
+    max-height: 100px;
+    object-fit: contain;
+}
+
+/* tên công ty */
+.company-name {
+    margin-top: 10px;
+    min-height: 40px;
+}

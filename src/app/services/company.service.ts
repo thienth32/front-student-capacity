@@ -13,6 +13,6 @@ export class CompanyService {
 
   // Lấy ra tất cả doanh nghiệp
   getAllCompany(): Observable<ResponsePayload> {
-    return this.http.get<ResponsePayload>(`${environment.companyListUrl}?page=2`);
+    return this.http.get<ResponsePayload>(`${environment.companyListUrl}?status=1&limit=20`);
   }
 }
